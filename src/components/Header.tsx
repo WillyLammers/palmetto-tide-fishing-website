@@ -38,7 +38,7 @@ export default function Header() {
             alt="Palmetto Tide Charters"
             width={140}
             height={140}
-            className="h-[140px] w-[140px] object-contain drop-shadow-[0_2px_12px_rgba(255,255,255,0.3)]"
+            className="h-20 w-20 md:h-[110px] md:w-[110px] lg:h-[140px] lg:w-[140px] object-contain drop-shadow-[0_2px_12px_rgba(255,255,255,0.3)]"
             priority
           />
         </Link>

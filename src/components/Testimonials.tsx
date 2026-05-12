@@ -179,7 +179,7 @@ export default function Testimonials() {
           {/* Cards — fade on transition */}
           <div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-opacity duration-[250ms]"
-            style={{ opacity: fading ? 0 : 1, height: "420px" }}
+            style={{ opacity: fading ? 0 : 1, minHeight: "420px" }}
           >
             {visibleIndices.map((idx, slot) => (
               <div key={`slot-${slot}`} className="h-full overflow-hidden">

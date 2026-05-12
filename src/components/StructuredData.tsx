@@ -53,7 +53,7 @@ export default function StructuredData() {
     name: BUSINESS_NAME,
     alternateName: "Palmetto Tide Fishing Charters",
     description:
-      "Premium inshore and nearshore fishing charters in Charleston, South Carolina with Captain Joseph Christy. Targeting redfish, speckled trout, flounder and more on the Lowcountry flats.",
+      "Premium inshore and nearshore fishing charters in Charleston, South Carolina with born-and-raised Charlestonian Captain Joseph Christy. A lifelong local guide targeting redfish, speckled trout, flounder and more on the Lowcountry flats.",
     url: SITE_URL,
     telephone: PHONE,
     email: EMAIL,
@@ -188,9 +188,20 @@ export default function StructuredData() {
     honorificPrefix: "Captain",
     jobTitle: "USCG-Licensed Fishing Charter Captain",
     description:
-      "Born-and-raised Charleston, SC native with over 15 years guiding inshore and nearshore fishing trips throughout the Lowcountry.",
+      "Born-and-raised Charleston, SC native and lifelong Lowcountry fisherman. Captain Joseph Christy has spent his entire life on Charleston Harbor, the barrier-island flats, and the back creeks — the kind of intimate local knowledge no transplant guide can match.",
     image: `${SITE_URL}/images/about/about-me.jpeg`,
     worksFor: { "@id": `${SITE_URL}/#business` },
+    nationality: { "@type": "Country", name: "United States" },
+    birthPlace: {
+      "@type": "Place",
+      name: "Charleston, South Carolina",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Charleston",
+        addressRegion: "SC",
+        addressCountry: "US",
+      },
+    },
     homeLocation: {
       "@type": "Place",
       address: {
@@ -204,9 +215,15 @@ export default function StructuredData() {
     knowsAbout: [
       "Charleston inshore fishing",
       "Lowcountry tides",
+      "Lowcountry back creeks",
+      "Charleston Harbor fishing",
+      "Charleston barrier-island flats",
+      "Local Charleston fishing spots",
       "Redfish fishing",
       "Speckled trout fishing",
       "Flounder fishing",
+      "Sheepshead fishing",
+      "Inshore saltwater fishing",
     ],
   };
 

@@ -34,7 +34,7 @@ export default function Hero() {
       <div className="relative z-10 h-full flex flex-col justify-end px-8 md:px-16 lg:px-24 pb-28 md:pb-36">
         {/* Location label */}
         <p className="font-heading text-white/40 text-xs tracking-[0.4em] uppercase mb-5 animate-fade-in-up">
-          Charleston, SC
+          Charleston, SC <span className="text-gold/70">·</span> Born &amp; Raised
         </p>
 
         {/* Headline */}

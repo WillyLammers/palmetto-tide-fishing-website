@@ -63,7 +63,11 @@ export default function About() {
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
             }`}
           >
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex flex-wrap items-center gap-3 mb-4">
+              <span className="inline-flex items-center gap-1.5 font-heading text-[10px] tracking-[0.25em] uppercase text-navy bg-gold/90 px-3 py-1.5 rounded-full">
+                <span className="w-1.5 h-1.5 rounded-full bg-navy" />
+                Charleston Native
+              </span>
               <div className="section-line" />
               <p className="font-heading text-ocean tracking-[0.3em] uppercase text-xs">
                 Meet Your Captain
@@ -75,11 +79,11 @@ export default function About() {
             </h2>
 
             <p className="font-body text-slate text-lg leading-[1.8] mb-6 max-w-xl">
-              Born and raised in Charleston, South Carolina, Captain Joseph
-              Christy has spent his entire life on the waters of the Lowcountry.
-              What started as a childhood passion for fishing has grown into a
-              lifelong dedication to sharing the beauty and excitement of
-              Charleston&apos;s inshore waters.
+              A born-and-raised Charlestonian, Captain Joseph Christy has fished
+              these creeks, harbors, and barrier-island flats since before he
+              could drive a truck. The Lowcountry isn&apos;t a destination he
+              moved to — it&apos;s home water, and every tide tells him
+              something a transplant guide spends years trying to learn.
             </p>
 
             <p className="font-body text-slate-light text-base leading-[1.8] mb-10 max-w-xl">

@@ -17,7 +17,7 @@ const trips = [
     id: "half-day-inshore",
     name: "Half Day Inshore Fishing Charter",
     description:
-      "4-hour inshore fishing trip targeting redfish, speckled trout and flounder on the Charleston Lowcountry flats. Up to 4 anglers. All tackle, live bait and license included.",
+      "4-hour inshore fishing trip targeting redfish, speckled trout and flounder on the Charleston Lowcountry flats. Up to 6 anglers. All tackle, live bait and license included.",
     duration: "PT4H",
     price: "450",
     image: `${SITE_URL}/images/gallery/fishing-21.jpg`,
@@ -26,7 +26,7 @@ const trips = [
     id: "full-day-inshore",
     name: "Full Day Inshore Fishing Charter",
     description:
-      "8-hour all-day inshore charter running Charleston Harbor and the surrounding barrier-island creeks. Up to 4 anglers. All tackle, live bait, cooler with water and ice included.",
+      "8-hour all-day inshore charter running Charleston Harbor and the surrounding barrier-island creeks. Up to 6 anglers. All tackle, live bait, cooler with water and ice included.",
     duration: "PT8H",
     price: "800",
     image: `${SITE_URL}/images/gallery/fishing-22.jpg`,
@@ -35,7 +35,7 @@ const trips = [
     id: "nearshore-adventure",
     name: "Nearshore Fishing Adventure",
     description:
-      "6-hour nearshore fishing trip beyond the Charleston barrier islands targeting sharks, cobia and more. Up to 4 anglers. All tackle and live bait included, fight chair available.",
+      "6-hour nearshore fishing trip beyond the Charleston barrier islands targeting sharks, cobia and more. Up to 6 anglers. All tackle and live bait included, fight chair available.",
     duration: "PT6H",
     price: "650",
     image: `${SITE_URL}/images/gallery/fishing-23.jpg`,
@@ -281,7 +281,7 @@ export default function StructuredData() {
         name: "How many anglers can come on a trip?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Each charter is private and accommodates up to 4 anglers. Kids and beginners are always welcome.",
+          text: "Each charter is private and accommodates up to 6 anglers. Kids and beginners are always welcome.",
         },
       },
       {

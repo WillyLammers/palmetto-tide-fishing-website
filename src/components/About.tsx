@@ -93,9 +93,9 @@ export default function About() {
             {/* Stats row */}
             <div className="flex gap-10 md:gap-14 pt-8 border-t border-sand-dark">
               {[
-                { value: "500+", label: "Charters" },
+                { value: "USCG", label: "Licensed Captain" },
                 { value: "5.0", label: "Star Rating" },
-                { value: "4", label: "Max Anglers" },
+                { value: "6", label: "Max Anglers" },
               ].map((stat) => (
                 <div key={stat.label}>
                   <p className="font-heading text-3xl md:text-4xl font-bold text-navy">{stat.value}</p>

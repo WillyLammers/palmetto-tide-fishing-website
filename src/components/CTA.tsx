@@ -25,7 +25,7 @@ export default function CTA() {
       <div className="absolute inset-0">
         <Image
           src="/images/gallery/fishing-14.jpg"
-          alt="Inshore fishing Charleston"
+          alt="Book a Charleston inshore fishing charter with Captain Joseph Christy"
           fill
           className="object-cover object-center"
           sizes="100vw"

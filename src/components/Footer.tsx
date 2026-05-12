@@ -1,4 +1,5 @@
 import Link from "next/link";
+import CopyButton from "./CopyButton";
 
 export default function Footer() {
   return (
@@ -47,21 +48,23 @@ export default function Footer() {
               Contact
             </h4>
             <ul className="space-y-3">
-              <li>
+              <li className="flex items-center gap-2">
                 <Link
                   href="tel:8434714767"
                   className="font-body text-white/55 text-sm hover:text-gold transition-colors duration-300"
                 >
                   (843) 471-4767
                 </Link>
+                <CopyButton value="(843) 471-4767" label="phone number" />
               </li>
-              <li>
+              <li className="flex items-center gap-2">
                 <Link
                   href="mailto:palmettotidecharters@gmail.com"
                   className="font-body text-white/55 text-sm hover:text-gold transition-colors duration-300 break-all"
                 >
                   palmettotidecharters@gmail.com
                 </Link>
+                <CopyButton value="palmettotidecharters@gmail.com" label="email" />
               </li>
               <li className="font-body text-white/55 text-sm">
                 Charleston, South Carolina

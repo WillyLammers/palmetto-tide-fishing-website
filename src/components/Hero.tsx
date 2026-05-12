@@ -10,7 +10,7 @@ export default function Hero() {
       <div className="absolute inset-0 animate-slow-zoom">
         <Image
           src="/images/hero/hero.png"
-          alt="Charleston inshore fishing at sunset"
+          alt="Charleston, SC inshore fishing charter at sunset with Palmetto Tide Charters"
           fill
           priority
           className="object-cover"

@@ -11,10 +11,15 @@ type ApifyReview = {
   stars?: number;
   publishedAtDate?: string;
   publishAt?: string;
+  // The flat reviews actor carries the place each review belongs to, which
+  // lets us reject reviews scraped for a different business.
+  title?: string;
+  url?: string;
 };
 
 type ApifyDatasetItem = {
   title?: string;
+  url?: string;
   totalScore?: number;
   reviewsCount?: number;
   reviews?: ApifyReview[];
@@ -45,14 +50,23 @@ const formatDate = (iso?: string): string => {
 
 export async function GET() {
   const token = process.env.APIFY_TOKEN;
+  // Read from the dedicated palmetto-tide-reviews task so its latest run only
+  // ever contains Palmetto's place. The old bare-actor "runs/last" returned
+  // whichever business scraped most recently across the shared account.
+  const taskId = process.env.APIFY_TASK_ID ?? "gX8coQZ8sJlP54hVI";
   const actorId = process.env.APIFY_ACTOR_ID ?? "compass~Google-Maps-Reviews-Scraper";
+  // Safety net: only ever surface reviews for Palmetto Tide Charters' place.
+  const placeId = process.env.APIFY_PLACE_ID ?? "ChIJUQT50xpOVGoRJL_O7vcwT50";
 
   if (!token) {
     return NextResponse.json({ error: "APIFY_TOKEN not configured" }, { status: 500 });
   }
 
   try {
-    const url = `https://api.apify.com/v2/acts/${actorId}/runs/last/dataset/items?token=${token}&status=SUCCEEDED&clean=true`;
+    const base = taskId
+      ? `https://api.apify.com/v2/actor-tasks/${taskId}/runs/last/dataset/items`
+      : `https://api.apify.com/v2/acts/${actorId}/runs/last/dataset/items`;
+    const url = `${base}?token=${token}&status=SUCCEEDED&clean=true`;
     const apifyRes = await fetch(url, { next: { revalidate: 86400 } });
 
     if (!apifyRes.ok) {
@@ -65,13 +79,17 @@ export async function GET() {
     let aggregateRating: number | null = null;
     let totalReviewCount: number | null = null;
 
+    const isOurPlace = (placeUrl?: string): boolean =>
+      !placeId || (placeUrl ?? "").includes(placeId);
+
     if (items.length > 0 && "reviews" in items[0] && Array.isArray((items[0] as ApifyDatasetItem).reviews)) {
-      const place = items[0] as ApifyDatasetItem;
-      rawReviews = place.reviews ?? [];
-      aggregateRating = typeof place.totalScore === "number" ? place.totalScore : null;
-      totalReviewCount = typeof place.reviewsCount === "number" ? place.reviewsCount : null;
+      const places = (items as ApifyDatasetItem[]).filter((p) => isOurPlace(p.url));
+      const place = places[0];
+      rawReviews = place?.reviews ?? [];
+      aggregateRating = typeof place?.totalScore === "number" ? place.totalScore : null;
+      totalReviewCount = typeof place?.reviewsCount === "number" ? place.reviewsCount : null;
     } else {
-      rawReviews = items as ApifyReview[];
+      rawReviews = (items as ApifyReview[]).filter((r) => isOurPlace(r.url));
       totalReviewCount = rawReviews.length;
       if (rawReviews.length > 0) {
         const sum = rawReviews.reduce((acc, r) => acc + (r.stars ?? 0), 0);

@@ -111,10 +111,6 @@ export const metadata: Metadata = {
     description: DEFAULT_DESCRIPTION,
     images: ["/images/hero/og-image.png"],
   },
-  icons: {
-    icon: [{ url: "/app/icon.png", type: "image/png" }],
-    apple: [{ url: "/app/icon.png" }],
-  },
   other: {
     "geo.region": "US-SC",
     "geo.placename": "Charleston",

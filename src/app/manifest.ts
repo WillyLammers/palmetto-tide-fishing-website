@@ -13,8 +13,8 @@ export default function manifest(): MetadataRoute.Manifest {
     orientation: "portrait",
     icons: [
       {
-        src: "/app/icon.png",
-        sizes: "512x512",
+        src: "/logos/palmetto-tide-logo.png",
+        sizes: "500x500",
         type: "image/png",
         purpose: "any",
       },

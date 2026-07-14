@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const allPhotos = Array.from(
-  { length: 43 },
+  { length: 54 },
   (_, i) => `/images/gallery/fishing-${24 + i}.jpg`
 );
 const topRow = allPhotos.filter((_, i) => i % 2 === 0);

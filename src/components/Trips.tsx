@@ -25,13 +25,23 @@ const trips = [
     photoPosition: "object-center",
   },
   {
-    id: "nearshore",
-    title: "Nearshore Adventure",
-    duration: "6 Hours",
-    price: "650",
-    tagline: "Sharks, cobia & more beyond the barrier islands.",
-    includes: ["Up to 6 anglers", "All tackle & live bait", "Fight chair available"],
-    photo: "/images/gallery/fishing-23.jpg",
+    id: "shark-fishing",
+    title: "Shark Fishing",
+    duration: "2 Hours",
+    price: "400",
+    tagline: "Hook into hard-fighting sharks right in Charleston Harbor.",
+    includes: ["Up to 6 anglers", "All tackle & bait", "Scheduled around the tides"],
+    photo: "/images/gallery/fishing-17.jpg",
+    photoPosition: "object-center",
+  },
+  {
+    id: "shark-tooth-hunting",
+    title: "Shark Tooth Hunting",
+    duration: "2 Hours",
+    price: "350",
+    tagline: "Dig fossil shark teeth on tide-bared sandbars — everything you find, you keep.",
+    includes: ["Up to 6 guests", "Perfect for kids", "Scheduled around the tides"],
+    photo: "/images/gallery/fishing-11.jpg",
     photoPosition: "object-center",
   },
 ];
@@ -60,7 +70,7 @@ export default function Trips() {
         </div>
 
         {/* Cards */}
-        <div className="grid md:grid-cols-3 gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {trips.map((trip) => (
             <div
               key={trip.id}
@@ -76,7 +86,7 @@ export default function Trips() {
                   src={trip.photo}
                   alt={trip.title}
                   fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   className={`object-cover transition-transform duration-700 group-hover:scale-105 ${trip.photoPosition ?? "object-center"}`}
                 />
                 {/* Duration pill */}
@@ -96,7 +106,7 @@ export default function Trips() {
               </div>
 
               {/* Content panel */}
-              <div className="flex flex-col flex-1 bg-white p-6 lg:p-7">
+              <div className="flex flex-col flex-1 bg-white p-6">
                 <h3 className="font-heading text-xl font-bold text-navy uppercase tracking-wide mb-2">
                   {trip.title}
                 </h3>

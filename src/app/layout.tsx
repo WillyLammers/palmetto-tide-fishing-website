@@ -21,7 +21,7 @@ const SITE_NAME = "Palmetto Tide Charters";
 const DEFAULT_TITLE =
   "Palmetto Tide Charters | Charleston, SC Inshore Fishing Charters";
 const DEFAULT_DESCRIPTION =
-  "Top-rated Charleston, SC inshore fishing charters with Captain Joseph Christy. Redfish, trout, flounder & more on the Lowcountry flats. Half-day, full-day & nearshore trips. Book your Charleston fishing trip today.";
+  "Top-rated Charleston, SC inshore fishing charters with Captain Joseph Christy. Redfish, trout & flounder on the Lowcountry flats, plus shark fishing & shark tooth hunting trips. Book your Charleston fishing trip today.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -54,7 +54,8 @@ export const metadata: Metadata = {
     "Sullivan's Island fishing",
     "Folly Beach fishing charters",
     "James Island fishing",
-    "nearshore fishing Charleston",
+    "shark fishing Charleston",
+    "shark tooth hunting Charleston",
     "saltwater fishing Charleston SC",
     "family fishing trips Charleston",
     "private fishing charters Charleston",

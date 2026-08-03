@@ -32,13 +32,22 @@ const trips = [
     image: `${SITE_URL}/images/gallery/fishing-22.jpg`,
   },
   {
-    id: "nearshore-adventure",
-    name: "Nearshore Fishing Adventure",
+    id: "shark-fishing",
+    name: "Charleston Shark Fishing Trip",
     description:
-      "6-hour nearshore fishing trip beyond the Charleston barrier islands targeting sharks, cobia and more. Up to 6 anglers. All tackle and live bait included, fight chair available.",
-    duration: "PT6H",
-    price: "650",
-    image: `${SITE_URL}/images/gallery/fishing-23.jpg`,
+      "2-hour shark fishing trip on Charleston Harbor targeting blacktip, sharpnose, bonnethead and more. Scheduled around the tides. Up to 6 anglers. All tackle and bait included.",
+    duration: "PT2H",
+    price: "400",
+    image: `${SITE_URL}/images/gallery/fishing-17.jpg`,
+  },
+  {
+    id: "shark-tooth-hunting",
+    name: "Charleston Shark Tooth Hunting Trip",
+    description:
+      "2-hour shark tooth hunting trip scheduled around low tide. Hunt fossilized shark teeth — including megalodon — on Charleston's tide-bared sandbars and banks. Perfect for kids and families. Up to 6 guests. Everything you find, you keep.",
+    duration: "PT2H",
+    price: "350",
+    image: `${SITE_URL}/images/gallery/fishing-11.jpg`,
   },
 ];
 
@@ -53,7 +62,7 @@ export default function StructuredData() {
     name: BUSINESS_NAME,
     alternateName: "Palmetto Tide Fishing Charters",
     description:
-      "Premium inshore and nearshore fishing charters in Charleston, South Carolina with born-and-raised Charlestonian Captain Joseph Christy. A lifelong local guide targeting redfish, speckled trout, flounder and more on the Lowcountry flats.",
+      "Premium inshore fishing charters, shark fishing and shark tooth hunting trips in Charleston, South Carolina with born-and-raised Charlestonian Captain Joseph Christy. A lifelong local guide targeting redfish, speckled trout, flounder and more on the Lowcountry flats.",
     url: SITE_URL,
     telephone: PHONE,
     email: EMAIL,
@@ -112,7 +121,8 @@ export default function StructuredData() {
     employee: { "@id": `${SITE_URL}/#captain` },
     knowsAbout: [
       "Inshore fishing",
-      "Nearshore fishing",
+      "Shark tooth hunting",
+      "Fossil shark teeth",
       "Saltwater fishing",
       "Light-tackle fishing",
       "Fly fishing",
@@ -290,7 +300,7 @@ export default function StructuredData() {
         name: "What fish will we target on a Charleston inshore charter?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Inshore trips primarily target redfish, speckled trout and flounder, with seasonal opportunities for sheepshead, black drum and tarpon. Nearshore trips can target sharks, cobia and other species beyond the barrier islands.",
+          text: "Inshore trips primarily target redfish, speckled trout and flounder, with seasonal opportunities for sheepshead, black drum and tarpon. Dedicated 2-hour shark fishing trips target blacktip, sharpnose, bonnethead and other Lowcountry sharks right in Charleston Harbor.",
         },
       },
       {
@@ -315,6 +325,14 @@ export default function StructuredData() {
         acceptedAnswer: {
           "@type": "Answer",
           text: "Call or text Captain Joseph directly at (843) 471-4767, or email palmettotidecharters@gmail.com to check availability and reserve your date.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Can we hunt for shark teeth in Charleston?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes — Palmetto Tide Charters runs 2-hour shark tooth hunting trips scheduled around low tide, when Charleston's sandbars and banks are exposed. You can find fossilized teeth from megalodon, great white, tiger and other sharks, and everything you find is yours to keep. It is one of the best trips for kids and families.",
         },
       },
       {

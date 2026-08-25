@@ -63,28 +63,24 @@ function ReviewCard({ review }: { review: Review }) {
   );
 }
 
-export default function Testimonials() {
+export default function Testimonials({
+  reviews = fallbackReviews,
+  aggregateRating = null,
+  totalReviewCount = null,
+}: {
+  reviews?: Review[];
+  /** Live Google average, or null when the scrape could not confirm one. */
+  aggregateRating?: number | null;
+  /** Live Google review count, or null when the scrape could not confirm one. */
+  totalReviewCount?: number | null;
+}) {
   const sectionRef = useRef<HTMLElement>(null);
-  const [reviews, setReviews] = useState<Review[]>(fallbackReviews);
-  const [aggregateRating, setAggregateRating] = useState<number>(5.0);
-  const [totalReviewCount, setTotalReviewCount] = useState<number | null>(null);
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
   // fading: cross-fade when changing slides
   const [fading, setFading] = useState(false);
   const pendingIndex = useRef<number | null>(null);
   const touchStartX = useRef<number | null>(null);
-
-  useEffect(() => {
-    fetch("/api/reviews")
-      .then((r) => r.ok ? r.json() : null)
-      .then((data) => {
-        if (data?.reviews?.length) setReviews(data.reviews);
-        if (data?.aggregateRating) setAggregateRating(data.aggregateRating);
-        if (data?.totalReviewCount) setTotalReviewCount(data.totalReviewCount);
-      })
-      .catch(() => {});
-  }, []);
 
   // Smooth fade transition
   const goTo = useCallback((idx: number) => {
@@ -148,7 +144,7 @@ export default function Testimonials() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-4 bg-navy/5 hover:bg-navy/10 border border-navy/10 hover:border-gold/50 rounded-2xl px-8 py-4 transition-all duration-300"
           >
-            <span className="font-heading text-4xl font-bold text-navy">{aggregateRating.toFixed(1)}</span>
+            <span className="font-heading text-4xl font-bold text-navy">{(aggregateRating ?? 5).toFixed(1)}</span>
             <div className="flex flex-col items-start gap-1">
               <StarRow />
               <span className="font-body text-slate text-xs tracking-wider">

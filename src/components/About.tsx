@@ -3,7 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
-export default function About() {
+export default function About({
+  aggregateRating = null,
+}: {
+  /** Live Google average, or null when the scrape could not confirm one. */
+  aggregateRating?: number | null;
+}) {
   const sectionRef = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -100,7 +105,10 @@ export default function About() {
             <div className="flex gap-10 md:gap-14 pt-8 border-t border-sand-dark">
               {[
                 { value: "USCG", label: "Licensed Captain" },
-                { value: "5.0", label: "Star Rating" },
+                {
+                  value: aggregateRating ? aggregateRating.toFixed(1) : "5.0",
+                  label: "Star Rating",
+                },
                 { value: "6", label: "Max Anglers" },
               ].map((stat) => (
                 <div key={stat.label}>

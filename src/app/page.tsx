@@ -7,17 +7,32 @@ import Gallery from "@/components/Gallery";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 import StructuredData from "@/components/StructuredData";
+import { getReviews } from "@/lib/reviews";
 
-export default function Home() {
+export default async function Home() {
+  // Fetched once on the server and shared, so the About stats, the Testimonials
+  // header and the schema.org markup all quote the same Google numbers. Server
+  // rendering also puts the rating in the HTML for crawlers instead of popping
+  // in after hydration.
+  const { reviews, aggregateRating, totalReviewCount } = await getReviews();
+
   return (
     <>
-      <StructuredData />
+      <StructuredData
+        reviews={reviews}
+        aggregateRating={aggregateRating}
+        totalReviewCount={totalReviewCount}
+      />
       <Header />
       <main>
         <Hero />
-        <About />
+        <About aggregateRating={aggregateRating} />
         <Trips />
-        <Testimonials />
+        <Testimonials
+          reviews={reviews}
+          aggregateRating={aggregateRating}
+          totalReviewCount={totalReviewCount}
+        />
         <Gallery />
         <CTA />
       </main>

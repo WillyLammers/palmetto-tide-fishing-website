@@ -1,4 +1,4 @@
-import { fallbackReviews } from "@/data/fallbackReviews";
+import { fallbackReviews, type Review } from "@/data/fallbackReviews";
 
 const SITE_URL = "https://www.palmettotidecharters.com";
 const BUSINESS_NAME = "Palmetto Tide Charters";
@@ -51,11 +51,17 @@ const trips = [
   },
 ];
 
-export default function StructuredData() {
-  const averageRating =
-    fallbackReviews.reduce((sum, r) => sum + r.rating, 0) /
-    fallbackReviews.length;
-
+export default function StructuredData({
+  reviews = fallbackReviews,
+  aggregateRating = null,
+  totalReviewCount = null,
+}: {
+  reviews?: Review[];
+  /** Live Google average, or null when the scrape could not confirm one. */
+  aggregateRating?: number | null;
+  /** Live Google review count, or null when the scrape could not confirm one. */
+  totalReviewCount?: number | null;
+}) {
   const localBusiness = {
     "@type": ["LocalBusiness", "TravelAgency"],
     "@id": `${SITE_URL}/#business`,
@@ -135,14 +141,22 @@ export default function StructuredData() {
       "Charleston Harbor",
       "Lowcountry tides",
     ],
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: averageRating.toFixed(1),
-      reviewCount: fallbackReviews.length,
-      bestRating: 5,
-      worstRating: 1,
-    },
-    review: fallbackReviews.slice(0, 10).map((r) => ({
+    // Only publish a rating Google itself reports. Averaging the bundled
+    // sample would claim a perfect score over a handful of hand-picked
+    // reviews, which both misstates the business and breaks Google's
+    // structured data guidelines. No confirmed numbers, no rating markup.
+    ...(aggregateRating !== null && totalReviewCount !== null
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: aggregateRating.toFixed(1),
+            reviewCount: totalReviewCount,
+            bestRating: 5,
+            worstRating: 1,
+          },
+        }
+      : {}),
+    review: reviews.slice(0, 10).map((r) => ({
       "@type": "Review",
       author: { "@type": "Person", name: r.name },
       datePublished: r.date,

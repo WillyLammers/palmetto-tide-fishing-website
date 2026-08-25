@@ -17,9 +17,9 @@ export default function Footer() {
               </p>
             </div>
             <p className="font-body text-white/60 text-sm leading-[1.8] max-w-xs">
-              Premium inshore fishing charters in Charleston, South Carolina.
-              Creating unforgettable experiences on the waters of the
-              Lowcountry.
+              Inshore charters out of Charleston, South Carolina. Redfish,
+              trout, flounder and sharks — from the creeks behind Mount
+              Pleasant to the barrier-island flats.
             </p>
           </div>
 

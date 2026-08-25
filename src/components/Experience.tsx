@@ -1,13 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 const features = [
   {
     title: "The Lowcountry Waters",
     subtitle: "Our Fishing Grounds",
     description:
-      "From the winding creeks of the ACE Basin to the flats around Bull Island, Charleston offers some of the most diverse inshore fishing on the East Coast. Crystal-clear waters, abundant oyster beds, and miles of pristine marsh create the perfect habitat for redfish, speckled trout, flounder, and more.",
+      "From the winding creeks of the ACE Basin to the flats around Bull Island, Charleston holds some of the most diverse inshore fishing on the East Coast. Oyster bars, grass edges and miles of tidal marsh give redfish, speckled trout and flounder everywhere to feed — and the tide decides where they will be on any given morning.",
+    photo: "/images/gallery/fishing-04.jpg",
+    alt: "Redfish landed on the open water off Charleston, South Carolina",
     imageRight: false,
   },
   {
@@ -15,13 +18,17 @@ const features = [
     subtitle: "Year-Round Action",
     description:
       "Charleston's temperate climate means great fishing all year long. Spring brings bull redfish and sheepshead. Summer heats up with trout, flounder, and tarpon. Fall delivers slot redfish on the flats. Winter offers some of the best sight-fishing opportunities of the year.",
+    photo: "/images/gallery/fishing-51.jpg",
+    alt: "Angler holding a bull redfish caught with Palmetto Tide Charters",
     imageRight: true,
   },
   {
-    title: "First-Class Equipment",
+    title: "The Boat",
     subtitle: "What We Provide",
     description:
-      "Step aboard a fully equipped bay boat rigged with top-of-the-line rods, reels, and tackle. Live bait is always on hand, and Captain Joseph brings the expertise to match. All you need to bring is sunscreen, sunglasses, and a sense of adventure.",
+      "An 18-foot Sea Hunt bay boat with a wireless trolling motor, GPS and fishfinder, and a live well kept full. Rods, reels, tackle and bait are aboard, and your fishing license is covered. Bring sunscreen and sunglasses — Joseph cleans and bags your catch at the dock.",
+    photo: "/images/gallery/fishing-18.jpg",
+    alt: "Palmetto Tide Charters bay boat rigged for inshore fishing in Charleston Harbor",
     imageRight: false,
   },
 ];
@@ -60,15 +67,14 @@ function FeatureBlock({
           visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
         } ${feature.imageRight ? "lg:order-2" : ""}`}
       >
-        <div className="relative aspect-[16/10] overflow-hidden rounded-xl shadow-2xl group">
-          <div className="absolute inset-0 bg-gradient-to-br from-ocean/15 to-navy/25 flex items-center justify-center group-hover:from-ocean/20 group-hover:to-navy/30 transition-all duration-700">
-            <div className="text-center text-navy/30">
-              <svg className="w-14 h-14 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              <p className="font-heading text-xs tracking-[0.2em] uppercase">{feature.title}</p>
-            </div>
-          </div>
+        <div className="relative aspect-[16/10] overflow-hidden rounded-xl shadow-2xl group bg-navy/5">
+          <Image
+            src={feature.photo}
+            alt={feature.alt}
+            fill
+            sizes="(max-width: 1024px) 100vw, 58vw"
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+          />
         </div>
       </div>
 

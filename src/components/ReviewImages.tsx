@@ -10,15 +10,25 @@ type Props = {
 
 export default function ReviewImages({ images, alt, max = 3 }: Props) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  if (!images?.length) return null;
 
-  const shown = images.slice(0, max);
-  const isOpen = openIndex !== null;
+  // Every hook has to run on every render. The carousel reuses this component
+  // across reviews, so bailing out early for a review with no photos would
+  // change the hook count between renders and crash the section.
+  const count = images?.length ?? 0;
 
-  const prev = useCallback(() =>
-    setOpenIndex((i) => (i == null ? i : (i - 1 + images.length) % images.length)), [images.length]);
-  const next = useCallback(() =>
-    setOpenIndex((i) => (i == null ? i : (i + 1) % images.length)), [images.length]);
+  const prev = useCallback(
+    () => setOpenIndex((i) => (i == null ? i : (i - 1 + count) % count)),
+    [count]
+  );
+  const next = useCallback(
+    () => setOpenIndex((i) => (i == null ? i : (i + 1) % count)),
+    [count]
+  );
+
+  // A lightbox left open while the carousel swaps in a shorter review would
+  // otherwise point past the end of the new array.
+  const openSrc = openIndex !== null ? images?.[openIndex] : undefined;
+  const isOpen = openSrc !== undefined;
 
   useEffect(() => {
     if (!isOpen) return;
@@ -30,6 +40,10 @@ export default function ReviewImages({ images, alt, max = 3 }: Props) {
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [isOpen, prev, next]);
+
+  if (!count) return null;
+
+  const shown = images.slice(0, max);
 
   return (
     <>
@@ -76,7 +90,7 @@ export default function ReviewImages({ images, alt, max = 3 }: Props) {
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              src={images[openIndex!]}
+              src={openSrc}
               alt={alt}
               referrerPolicy="no-referrer"
               className="max-h-[85vh] w-auto rounded-lg shadow-2xl object-contain"
@@ -114,7 +128,7 @@ export default function ReviewImages({ images, alt, max = 3 }: Props) {
                   </svg>
                 </button>
                 <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-white/80 text-sm bg-black/50 rounded-full px-3 py-1 font-body">
-                  {openIndex! + 1} / {images.length}
+                  {(openIndex ?? 0) + 1} / {images.length}
                 </div>
               </>
             )}

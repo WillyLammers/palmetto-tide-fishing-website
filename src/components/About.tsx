@@ -79,19 +79,21 @@ export default function About() {
             </h2>
 
             <p className="font-body text-slate text-lg leading-[1.8] mb-6 max-w-xl">
-              A born-and-raised Charlestonian, Captain Joseph Christy has fished
-              these creeks, harbors, and barrier-island flats since before he
-              could drive a truck. The Lowcountry isn&apos;t a destination he
-              moved to — it&apos;s home water, and every tide tells him
-              something a transplant guide spends years trying to learn.
+              Joseph Christy learned this water the slow way — one tide at a
+              time, years before it was a job. He grew up fishing the creeks
+              behind Mount Pleasant and the rips of Charleston Harbor, and he
+              still runs the same water today. His boat is an 18-foot Sea Hunt,
+              small enough to slip onto flats the bigger charters have to run
+              around — which is usually right where the redfish are sitting.
             </p>
 
             <p className="font-body text-slate-light text-base leading-[1.8] mb-10 max-w-xl">
-              With an intimate knowledge of local tides, seasonal patterns, and
-              the best-kept fishing spots from the Charleston Harbor to the
-              barrier islands, Captain Joseph ensures every trip is an
-              unforgettable experience. Whether you&apos;re a seasoned angler or
-              casting a line for the first time, you&apos;re in expert hands.
+              Six anglers max, so nobody fishes over a shoulder. He rigs the
+              rods, calls the cast, and keeps his head when three fish hook up
+              at once. First-timers and kids catch fish on this boat; so do
+              people who&apos;ve fished their whole lives. You&apos;ll get an
+              honest read on what&apos;s biting before you book — and your
+              catch comes back cleaned and bagged at the dock.
             </p>
 
             {/* Stats row */}

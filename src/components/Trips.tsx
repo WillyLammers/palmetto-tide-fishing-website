@@ -70,7 +70,9 @@ export default function Trips() {
         </div>
 
         {/* Cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {/* Two-up from the smallest screen: four stacked cards made this the
+            tallest section on the page by a wide margin. */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
           {trips.map((trip) => (
             <div
               key={trip.id}
@@ -86,19 +88,21 @@ export default function Trips() {
                   src={trip.photo}
                   alt={trip.title}
                   fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  sizes="(max-width: 1024px) 50vw, 25vw"
                   className={`object-cover transition-transform duration-700 group-hover:scale-105 ${trip.photoPosition ?? "object-center"}`}
                 />
-                {/* Duration pill */}
-                <div className="absolute top-4 right-4">
-                  <span className="font-heading text-[10px] tracking-[0.2em] uppercase bg-black/55 backdrop-blur-sm text-white px-3 py-1.5 rounded-full">
+                {/* Duration pill — sits bottom-right on narrow screens so it
+                    cannot collide with the "Most Popular" badge on the
+                    featured card, which shares the top row. */}
+                <div className="absolute bottom-2 right-2 sm:bottom-auto sm:top-4 sm:right-4">
+                  <span className="font-heading text-[9px] sm:text-[10px] tracking-[0.15em] sm:tracking-[0.2em] uppercase bg-black/55 backdrop-blur-sm text-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-full">
                     {trip.duration}
                   </span>
                 </div>
                 {/* Featured badge */}
                 {trip.featured && (
-                  <div className="absolute top-4 left-4">
-                    <span className="font-heading text-[10px] tracking-[0.2em] uppercase bg-gold text-navy px-3 py-1.5 rounded-full font-bold">
+                  <div className="absolute top-2 left-2 sm:top-4 sm:left-4">
+                    <span className="font-heading text-[9px] sm:text-[10px] tracking-[0.15em] sm:tracking-[0.2em] uppercase bg-gold text-navy px-2 py-1 sm:px-3 sm:py-1.5 rounded-full font-bold">
                       Most Popular
                     </span>
                   </div>
@@ -106,19 +110,19 @@ export default function Trips() {
               </div>
 
               {/* Content panel */}
-              <div className="flex flex-col flex-1 bg-white p-6">
-                <h3 className="font-heading text-xl font-bold text-navy uppercase tracking-wide mb-2">
+              <div className="flex flex-col flex-1 bg-white p-4 sm:p-6">
+                <h3 className="font-heading text-base sm:text-xl font-bold text-navy uppercase tracking-wide mb-1.5 sm:mb-2">
                   {trip.title}
                 </h3>
-                <p className="font-body text-slate text-sm leading-relaxed mb-5">
+                <p className="font-body text-slate text-xs sm:text-sm leading-relaxed mb-4 sm:mb-5">
                   {trip.tagline}
                 </p>
 
                 {/* Includes */}
-                <ul className="space-y-2 mb-6 flex-1">
+                <ul className="space-y-1.5 sm:space-y-2 mb-4 sm:mb-6 flex-1">
                   {trip.includes.map((item) => (
-                    <li key={item} className="flex items-center gap-2.5 font-body text-sm text-slate">
-                      <svg className="w-3.5 h-3.5 text-ocean flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <li key={item} className="flex items-start gap-2 sm:gap-2.5 font-body text-[11px] sm:text-sm text-slate">
+                      <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5 mt-0.5 text-ocean flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                       </svg>
                       {item}
@@ -127,17 +131,17 @@ export default function Trips() {
                 </ul>
 
                 {/* Price + CTA */}
-                <div className="pt-5 border-t border-black/[0.06] flex items-center justify-between gap-3">
+                <div className="pt-4 sm:pt-5 border-t border-black/[0.06] flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div>
                     <div className="flex items-baseline gap-0.5">
-                      <span className="font-body text-slate text-sm">$</span>
-                      <span className="font-heading text-3xl font-bold text-navy">{trip.price}</span>
+                      <span className="font-body text-slate text-xs sm:text-sm">$</span>
+                      <span className="font-heading text-2xl sm:text-3xl font-bold text-navy">{trip.price}</span>
                     </div>
-                    <p className="font-body text-[11px] text-slate-light tracking-wider uppercase">per trip</p>
+                    <p className="font-body text-[10px] sm:text-[11px] text-slate-light tracking-wider uppercase">per trip</p>
                   </div>
                   <button
                     onClick={book}
-                    className={`font-heading text-[11px] tracking-[0.2em] uppercase px-5 py-3 rounded-xl transition-all duration-300 flex-shrink-0 ${
+                    className={`font-heading text-[10px] sm:text-[11px] tracking-[0.15em] sm:tracking-[0.2em] uppercase px-3 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all duration-300 flex-shrink-0 ${
                       trip.featured
                         ? "bg-gold text-navy hover:bg-gold/90 shadow-md shadow-gold/20"
                         : "border border-navy/20 text-navy hover:bg-navy hover:text-white"

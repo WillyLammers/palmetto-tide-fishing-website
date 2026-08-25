@@ -7,6 +7,7 @@ import Gallery from "@/components/Gallery";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 import StructuredData from "@/components/StructuredData";
+import MobileCallBar from "@/components/MobileCallBar";
 import { getReviews } from "@/lib/reviews";
 
 export default async function Home() {
@@ -37,6 +38,7 @@ export default async function Home() {
         <CTA />
       </main>
       <Footer />
+      <MobileCallBar />
     </>
   );
 }

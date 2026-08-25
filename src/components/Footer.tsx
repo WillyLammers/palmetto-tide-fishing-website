@@ -3,9 +3,11 @@ import CopyButton from "./CopyButton";
 
 export default function Footer() {
   return (
-    <footer className="bg-navy pt-24 pb-8 border-t border-white/10">
+    // Extra bottom padding on mobile so the fixed call bar never covers the
+    // copyright line.
+    <footer className="bg-navy pt-16 md:pt-24 pb-28 lg:pb-8 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="grid md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-20">
+        <div className="grid md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 mb-12 md:mb-20">
           {/* Brand */}
           <div className="lg:col-span-4">
             <div className="mb-6">
@@ -25,7 +27,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div className="lg:col-span-2 lg:col-start-6">
-            <h4 className="font-heading text-[11px] text-white/80 tracking-[0.25em] uppercase mb-6">
+            <h4 className="font-heading text-[11px] text-white/80 tracking-[0.25em] uppercase mb-4 md:mb-6">
               Navigate
             </h4>
             <ul className="space-y-3">
@@ -44,7 +46,7 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div className="lg:col-span-3">
-            <h4 className="font-heading text-[11px] text-white/80 tracking-[0.25em] uppercase mb-6">
+            <h4 className="font-heading text-[11px] text-white/80 tracking-[0.25em] uppercase mb-4 md:mb-6">
               Contact
             </h4>
             <ul className="space-y-3">
@@ -74,7 +76,7 @@ export default function Footer() {
 
           {/* Social */}
           <div className="lg:col-span-3">
-            <h4 className="font-heading text-[11px] text-white/80 tracking-[0.25em] uppercase mb-6">
+            <h4 className="font-heading text-[11px] text-white/80 tracking-[0.25em] uppercase mb-4 md:mb-6">
               Follow Along
             </h4>
             <Link
@@ -105,14 +107,9 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="pt-8 border-t border-white/10">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="font-body text-white/40 text-xs tracking-wider">
-              &copy; {new Date().getFullYear()} Palmetto Tide Charters. All rights reserved.
-            </p>
-            <p className="font-body text-white/35 text-[11px] tracking-wider uppercase">
-              Charleston, South Carolina
-            </p>
-          </div>
+          <p className="font-body text-white/40 text-xs tracking-wider text-center md:text-left">
+            &copy; {new Date().getFullYear()} Palmetto Tide Charters. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

@@ -84,21 +84,21 @@ export default function About({
             </h2>
 
             <p className="font-body text-slate text-lg leading-[1.8] mb-6 max-w-xl">
-              Joseph Christy learned this water the slow way — one tide at a
-              time, years before it was a job. He grew up fishing the creeks
-              behind Mount Pleasant and the rips of Charleston Harbor, and he
-              still runs the same water today. His boat is an 18-foot Sea Hunt,
-              small enough to slip onto flats the bigger charters have to run
-              around — which is usually right where the redfish are sitting.
+              Joseph Christy was born in Charleston and has fished this water
+              his whole life. He started in the creeks behind Mount Pleasant.
+              He still fishes them, along with Charleston Harbor and the flats
+              out by the barrier islands. The boat is an 18-foot Sea Hunt,
+              shallow enough to run up on water the bigger boats have to go
+              around. That&apos;s usually where the redfish are.
             </p>
 
             <p className="font-body text-slate-light text-base leading-[1.8] mb-10 max-w-xl">
-              Six anglers max, so nobody fishes over a shoulder. He rigs the
-              rods, calls the cast, and keeps his head when three fish hook up
-              at once. First-timers and kids catch fish on this boat; so do
-              people who&apos;ve fished their whole lives. You&apos;ll get an
-              honest read on what&apos;s biting before you book — and your
-              catch comes back cleaned and bagged at the dock.
+              Six anglers is the limit, so nobody&apos;s casting over a
+              shoulder. Joseph rigs the rods and puts you on fish, and if three
+              of you hook up at once, he sorts it out. He&apos;s patient with
+              kids and with anyone who&apos;s never held a rod. Ask what&apos;s
+              biting before you book and you&apos;ll get a straight answer.
+              Your catch comes back cleaned and bagged at the dock.
             </p>
 
             {/* Stats row */}

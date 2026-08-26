@@ -92,11 +92,11 @@ export default function About({
             </p>
 
             <p className="font-body text-slate-light text-base leading-[1.8] mb-10 max-w-xl">
-              The boat is an 18-foot Sea Hunt, shallow enough to reach water
-              the larger boats have to run around. That&apos;s usually where
-              the redfish are. Six anglers is the limit, so nobody is casting
-              over a shoulder. Joseph rigs the rods and puts you on fish, and
-              when several hook up at once he keeps the deck under control.
+              He runs a shallow-draft bay boat, which gets him onto the flats
+              and creek mouths where the redfish hold. Six anglers is the
+              limit, so nobody is casting over a shoulder. He rigs the rods and
+              puts you on fish, and when several hook up at once he keeps the
+              deck under control.
               Your catch comes back cleaned and bagged at the dock. The part he
               cares about most is watching someone land their first saltwater
               fish. It puts him right back to being ten years old.

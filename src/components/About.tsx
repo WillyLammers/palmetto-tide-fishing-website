@@ -84,21 +84,23 @@ export default function About({
             </h2>
 
             <p className="font-body text-slate text-lg leading-[1.8] mb-6 max-w-xl">
-              Joseph Christy was born in Charleston and has fished this water
-              his whole life. He started in the creeks behind Mount Pleasant.
-              He still fishes them, along with Charleston Harbor and the flats
-              out by the barrier islands. The boat is an 18-foot Sea Hunt,
-              shallow enough to run up on water the bigger boats have to go
-              around. That&apos;s usually where the redfish are.
+              An uncle took Joseph Christy fishing when he was ten. He taught
+              himself most of the rest, learning the creeks behind Mount
+              Pleasant with his buddies, and he has been fishing them ever
+              since. He started guiding in 2023, running charters in between
+              classes while he was a full-time Division I athlete and student.
             </p>
 
             <p className="font-body text-slate-light text-base leading-[1.8] mb-10 max-w-xl">
-              Six anglers is the limit, so nobody&apos;s casting over a
-              shoulder. Joseph rigs the rods and puts you on fish, and if three
-              of you hook up at once, he sorts it out. He&apos;s patient with
-              kids and with anyone who&apos;s never held a rod. Ask what&apos;s
-              biting before you book and you&apos;ll get a straight answer.
-              Your catch comes back cleaned and bagged at the dock.
+              The boat is an 18-foot Sea Hunt, shallow enough to run up on
+              water the bigger boats have to go around. That&apos;s usually
+              where the redfish are. Six anglers is the limit, so nobody&apos;s
+              casting over a shoulder. Joseph rigs the rods and puts you on
+              fish, and if three of you hook up at once, he sorts it out. Your
+              catch comes back cleaned and bagged at the dock. Ask why he does
+              it and he&apos;ll talk about watching someone land their first
+              saltwater fish, and how their face takes him right back to being
+              ten.
             </p>
 
             {/* Stats row */}

@@ -84,23 +84,22 @@ export default function About({
             </h2>
 
             <p className="font-body text-slate text-lg leading-[1.8] mb-6 max-w-xl">
-              An uncle took Joseph Christy fishing when he was ten. He taught
-              himself most of the rest, learning the creeks behind Mount
-              Pleasant with his buddies, and he has been fishing them ever
-              since. He started guiding in 2023, running charters in between
-              classes while he was a full-time Division I athlete and student.
+              Captain Joseph Christy has fished these waters for more than
+              fifteen years, since he was ten years old. He grew up in the
+              creeks behind Mount Pleasant and still runs that water today,
+              along with Charleston Harbor and the flats out past the barrier
+              islands.
             </p>
 
             <p className="font-body text-slate-light text-base leading-[1.8] mb-10 max-w-xl">
-              The boat is an 18-foot Sea Hunt, shallow enough to run up on
-              water the bigger boats have to go around. That&apos;s usually
-              where the redfish are. Six anglers is the limit, so nobody&apos;s
-              casting over a shoulder. Joseph rigs the rods and puts you on
-              fish, and if three of you hook up at once, he sorts it out. Your
-              catch comes back cleaned and bagged at the dock. Ask why he does
-              it and he&apos;ll talk about watching someone land their first
-              saltwater fish, and how their face takes him right back to being
-              ten.
+              The boat is an 18-foot Sea Hunt, shallow enough to reach water
+              the larger boats have to run around. That&apos;s usually where
+              the redfish are. Six anglers is the limit, so nobody is casting
+              over a shoulder. Joseph rigs the rods and puts you on fish, and
+              when several hook up at once he keeps the deck under control.
+              Your catch comes back cleaned and bagged at the dock. The part he
+              cares about most is watching someone land their first saltwater
+              fish. It puts him right back to being ten years old.
             </p>
 
             {/* Stats row */}

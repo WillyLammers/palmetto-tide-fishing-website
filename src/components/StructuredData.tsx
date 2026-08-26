@@ -1,5 +1,3 @@
-import { fallbackReviews, type Review } from "@/data/fallbackReviews";
-
 const SITE_URL = "https://www.palmettotidecharters.com";
 const BUSINESS_NAME = "Palmetto Tide Charters";
 const PHONE = "+1-843-471-4767";
@@ -51,24 +49,27 @@ const trips = [
   },
 ];
 
-export default function StructuredData({
-  reviews = fallbackReviews,
-  aggregateRating = null,
-  totalReviewCount = null,
-}: {
-  reviews?: Review[];
-  /** Live Google average, or null when the scrape could not confirm one. */
-  aggregateRating?: number | null;
-  /** Live Google review count, or null when the scrape could not confirm one. */
-  totalReviewCount?: number | null;
-}) {
+/**
+ * No aggregateRating or review markup here, deliberately.
+ *
+ * Google: "If the entity that's being reviewed controls the reviews about
+ * itself, their pages that use LocalBusiness or any other type of Organization
+ * structured data are ineligible for star review feature." Our own reviews on
+ * our own site are exactly that case, so rating markup could never produce
+ * stars and only leaves invalid structured data on the page.
+ *
+ * https://developers.google.com/search/docs/appearance/structured-data/review-snippet
+ *
+ * The reviews still render for humans in the Testimonials section.
+ */
+export default function StructuredData() {
   const localBusiness = {
     "@type": ["LocalBusiness", "TravelAgency"],
     "@id": `${SITE_URL}/#business`,
     name: BUSINESS_NAME,
     alternateName: "Palmetto Tide Fishing Charters",
     description:
-      "Premium inshore fishing charters, shark fishing and shark tooth hunting trips in Charleston, South Carolina with born-and-raised Charlestonian Captain Joseph Christy. A lifelong local guide targeting redfish, speckled trout, flounder and more on the Lowcountry flats.",
+      "Inshore fishing charters, shark fishing and shark tooth hunting trips in Charleston, South Carolina with Captain Joseph Christy, a Charleston native targeting redfish, speckled trout and flounder on the Lowcountry flats.",
     url: SITE_URL,
     telephone: PHONE,
     email: EMAIL,
@@ -141,33 +142,6 @@ export default function StructuredData({
       "Charleston Harbor",
       "Lowcountry tides",
     ],
-    // Only publish a rating Google itself reports. Averaging the bundled
-    // sample would claim a perfect score over a handful of hand-picked
-    // reviews, which both misstates the business and breaks Google's
-    // structured data guidelines. No confirmed numbers, no rating markup.
-    ...(aggregateRating !== null && totalReviewCount !== null
-      ? {
-          aggregateRating: {
-            "@type": "AggregateRating",
-            ratingValue: aggregateRating.toFixed(1),
-            reviewCount: totalReviewCount,
-            bestRating: 5,
-            worstRating: 1,
-          },
-        }
-      : {}),
-    review: reviews.slice(0, 10).map((r) => ({
-      "@type": "Review",
-      author: { "@type": "Person", name: r.name },
-      datePublished: r.date,
-      reviewBody: r.review,
-      reviewRating: {
-        "@type": "Rating",
-        ratingValue: r.rating,
-        bestRating: 5,
-        worstRating: 1,
-      },
-    })),
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Fishing Charter Trips",
@@ -212,7 +186,7 @@ export default function StructuredData({
     honorificPrefix: "Captain",
     jobTitle: "USCG-Licensed Fishing Charter Captain",
     description:
-      "Born-and-raised Charleston, SC native and lifelong Lowcountry fisherman. Captain Joseph Christy has spent his entire life on Charleston Harbor, the barrier-island flats, and the back creeks — the kind of intimate local knowledge no transplant guide can match.",
+      "Charleston native and USCG-licensed charter captain. Joseph Christy has fished the creeks behind Mount Pleasant, Charleston Harbor and the barrier-island flats since he was ten years old.",
     image: `${SITE_URL}/images/about/about-me.jpeg`,
     worksFor: { "@id": `${SITE_URL}/#business` },
     nationality: { "@type": "Country", name: "United States" },

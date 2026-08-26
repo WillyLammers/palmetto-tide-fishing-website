@@ -6,6 +6,13 @@ import { fallbackReviews, type Review } from "@/data/fallbackReviews";
 import ReviewImages from "@/components/ReviewImages";
 
 const GOOGLE_REVIEWS_URL = "https://www.google.com/maps?cid=11335332628536409892";
+const FISHINGBOOKER_URL = "https://fishingbooker.com/charters/view/42857";
+// FishingBooker's own computed stats for this listing, quoted with attribution
+// rather than restated as our own claim. Verified August 2026; they drift as
+// trips are logged, so re-check the listing when updating this section.
+const FB_CAUGHT_FISH = "94%";
+const FB_RECOMMEND = "95%";
+const FB_REVIEW_COUNT = 57;
 const AUTO_ADVANCE_MS = 6000;
 const CARDS_VISIBLE = 3;
 
@@ -158,6 +165,25 @@ export default function Testimonials({
               <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
             </svg>
           </Link>
+
+          {/* Corroboration from an independent booking platform. The catch rate
+              answers the question people actually have before booking, which a
+              star rating does not. */}
+          <p className="mt-6 font-body text-slate text-sm leading-relaxed max-w-md mx-auto">
+            <span className="font-heading text-navy font-bold">{FB_CAUGHT_FISH}</span> of
+            anglers caught fish and{" "}
+            <span className="font-heading text-navy font-bold">{FB_RECOMMEND}</span>{" "}
+            recommend the trip, across {FB_REVIEW_COUNT} reviews on{" "}
+            <Link
+              href={FISHINGBOOKER_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-ocean underline underline-offset-2 hover:text-navy transition-colors duration-300"
+            >
+              FishingBooker
+            </Link>
+            .
+          </p>
         </div>
 
         {/* Slideshow */}

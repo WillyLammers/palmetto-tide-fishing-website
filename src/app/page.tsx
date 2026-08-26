@@ -19,11 +19,7 @@ export default async function Home() {
 
   return (
     <>
-      <StructuredData
-        reviews={reviews}
-        aggregateRating={aggregateRating}
-        totalReviewCount={totalReviewCount}
-      />
+      <StructuredData />
       <Header />
       <main>
         <Hero />

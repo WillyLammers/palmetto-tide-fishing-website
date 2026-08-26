@@ -92,11 +92,10 @@ export default function About({
             </p>
 
             <p className="font-body text-slate-light text-base leading-[1.8] mb-10 max-w-xl">
-              He runs a shallow-draft bay boat, which gets him onto the flats
-              and creek mouths where the redfish hold. Six anglers is the
-              limit, so nobody is casting over a shoulder. The part he
-              cares about most is watching someone land their first saltwater
-              fish. It puts him right back to being ten years old.
+              He runs a shallow-draft bay boat, which keeps the shallowest
+              water in reach. The part he cares about most is watching someone
+              land their first saltwater fish. It puts him right back to being
+              ten years old.
             </p>
 
             {/* Stats row */}

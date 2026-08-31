@@ -17,7 +17,7 @@ const trips = [
     id: "full-day",
     title: "Full Day Inshore",
     duration: "8 Hours",
-    price: "800",
+    price: "950",
     tagline: "All-day run through Charleston's best inshore spots.",
     includes: ["Up to 6 anglers", "All tackle & live bait", "Cooler with water & ice"],
     photo: "/images/gallery/fishing-22.jpg",

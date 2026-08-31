@@ -26,7 +26,7 @@ const trips = [
     description:
       "8-hour all-day inshore charter running Charleston Harbor and the surrounding barrier-island creeks. Up to 6 anglers. All tackle, live bait, cooler with water and ice included.",
     duration: "PT8H",
-    price: "800",
+    price: "950",
     image: `${SITE_URL}/images/gallery/fishing-22.jpg`,
   },
   {

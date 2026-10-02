@@ -5,6 +5,7 @@ import { trips, tripById } from "@/data/trips";
 import { mailHref, smsHref } from "@/data/site";
 import { SELECT_TRIP_EVENT } from "./BookTripButton";
 import { MailIcon, TextIcon } from "./icons";
+import { btn } from "./ui";
 
 const MAX_GUESTS = 6;
 
@@ -211,14 +212,14 @@ export default function BookingPlanner() {
       <div className="grid grid-cols-1 min-[420px]:grid-cols-2 gap-3">
         <a
           href={smsHref(message)}
-          className="flex items-center justify-center gap-2.5 min-h-[52px] rounded-lg bg-gold text-navy font-heading text-[13px] tracking-[0.18em] uppercase hover:bg-gold-light transition-colors shadow-md shadow-gold/20"
+          className={btn({ className: "w-full" })}
         >
           <TextIcon className="w-4 h-4" />
           Text Captain Joseph
         </a>
         <a
           href={mailHref(subject, message)}
-          className="flex items-center justify-center gap-2.5 min-h-[52px] rounded-lg border border-navy/25 text-navy font-heading text-[13px] tracking-[0.18em] uppercase hover:bg-navy hover:text-white transition-colors"
+          className={btn({ variant: "outline", className: "w-full" })}
         >
           <MailIcon className="w-4 h-4" />
           Email instead

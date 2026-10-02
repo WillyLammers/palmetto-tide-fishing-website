@@ -1,6 +1,7 @@
 import Image from "next/image";
 import HeroVideo from "./HeroVideo";
 import { Stars } from "./icons";
+import { btn } from "./ui";
 
 export default function Hero({
   aggregateRating = null,
@@ -30,7 +31,7 @@ export default function Hero({
       <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/10 to-navy/30" />
 
       <div className="relative z-10 min-h-[100svh] w-full max-w-7xl mx-auto flex flex-col justify-end px-6 sm:px-10 pt-32 pb-12 sm:pb-20 md:pb-28">
-        <p className="font-heading text-white/75 text-[11px] sm:text-xs tracking-[0.35em] uppercase mb-4 animate-fade-in-up">
+        <p className="font-heading text-white/80 text-[11px] sm:text-xs tracking-[0.25em] uppercase mb-4 animate-fade-in-up">
           Charleston, SC<span className="text-gold mx-2.5" aria-hidden="true">·</span>Born &amp; Raised
         </p>
 
@@ -40,7 +41,7 @@ export default function Hero({
         >
           Palmetto Tide
           <span
-            className="block font-heading font-medium text-shimmer tracking-[0.35em] mt-3"
+            className="block font-heading font-medium text-gold tracking-[0.35em] mt-3"
             style={{ fontSize: "clamp(1rem, 2.5vw, 1.75rem)" }}
           >
             Charters
@@ -54,13 +55,13 @@ export default function Hero({
         <div className="flex flex-col min-[420px]:flex-row gap-3 animate-fade-in-up [animation-delay:0.3s]">
           <a
             href="#contact"
-            className="inline-flex items-center justify-center px-8 py-4 bg-gold text-navy font-heading text-[13px] tracking-[0.2em] uppercase hover:bg-gold-light transition-colors duration-300 rounded shadow-2xl"
+            className={btn({ size: "lg" })}
           >
             Book a Trip
           </a>
           <a
             href="#trips"
-            className="inline-flex items-center justify-center px-8 py-4 border border-white/40 text-white font-heading text-[13px] tracking-[0.2em] uppercase hover:border-white hover:bg-white/10 transition-colors duration-300 rounded backdrop-blur-sm"
+            className={btn({ variant: "outlineLight", size: "lg", className: "backdrop-blur-sm" })}
           >
             Trips &amp; Prices
           </a>

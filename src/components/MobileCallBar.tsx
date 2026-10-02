@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { PHONE, PHONE_DISPLAY, smsHref } from "@/data/site";
 import { PhoneIcon, TextIcon } from "./icons";
+import { btn } from "./ui";
 
 /**
  * Persistent call/text bar for mobile.
@@ -63,7 +64,7 @@ export default function MobileCallBar() {
         <a
           href={`tel:${PHONE}`}
           aria-label={`Call Palmetto Tide Charters at ${PHONE_DISPLAY}`}
-          className="flex-1 flex items-center justify-center gap-2 min-h-[50px] rounded-lg bg-gold text-navy font-heading text-[13px] tracking-[0.2em] uppercase active:brightness-95 transition"
+          className={btn({ className: "flex-1 px-2" })}
         >
           <PhoneIcon className="w-4 h-4" />
           Call
@@ -71,14 +72,14 @@ export default function MobileCallBar() {
         <a
           href={smsHref("Hi Captain Joseph, I'd like to book a fishing trip.")}
           aria-label={`Text Palmetto Tide Charters at ${PHONE_DISPLAY}`}
-          className="flex-1 flex items-center justify-center gap-2 min-h-[50px] rounded-lg border border-white/30 text-white font-heading text-[13px] tracking-[0.2em] uppercase active:bg-white/10 transition"
+          className={btn({ variant: "outlineLight", className: "flex-1 px-2" })}
         >
           <TextIcon className="w-4 h-4" />
           Text
         </a>
         <a
           href="#contact"
-          className="flex-1 flex items-center justify-center min-h-[50px] rounded-lg bg-white text-navy font-heading text-[13px] tracking-[0.2em] uppercase active:brightness-95 transition"
+          className={btn({ variant: "outlineLight", className: "flex-1 px-2" })}
         >
           Book
         </a>

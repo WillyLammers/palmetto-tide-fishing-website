@@ -5,6 +5,7 @@ import { fallbackReviews, type Review } from "@/data/fallbackReviews";
 import { GOOGLE_REVIEWS_URL, FISHINGBOOKER_URL } from "@/data/site";
 import ReviewImages from "./ReviewImages";
 import { ChevronIcon, GoogleIcon, Stars } from "./icons";
+import { eyebrow } from "./ui";
 
 // FishingBooker's own computed stats for this listing, quoted with attribution
 // rather than restated as our own claim. Verified August 2026; they drift as
@@ -136,11 +137,7 @@ export default function Testimonials({
     <section id="reviews" className="relative py-20 md:py-32 bg-sand/40 overflow-hidden">
       <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-10">
         <div className="text-center mb-10 md:mb-14 reveal">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-8 h-px bg-ocean/50" />
-            <p className="font-heading text-ocean tracking-[0.3em] uppercase text-xs">Reviews</p>
-            <div className="w-8 h-px bg-ocean/50" />
-          </div>
+          <p className={`${eyebrow} text-ocean mb-4`}>Reviews</p>
           <h2 className="font-heading text-[2.75rem] sm:text-5xl md:text-6xl font-bold text-navy uppercase tracking-wide leading-none mb-8">
             What Guests Say
           </h2>

@@ -5,6 +5,7 @@ import TideStrip from "./TideStrip";
 import { MailIcon, PhoneIcon } from "./icons";
 import { EMAIL, PHONE, PHONE_DISPLAY } from "@/data/site";
 import type { Tide } from "@/lib/tides";
+import { eyebrow } from "./ui";
 
 export default function CTA({ tides = [] }: { tides?: Tide[] }) {
   return (
@@ -21,14 +22,10 @@ export default function CTA({ tides = [] }: { tides?: Tide[] }) {
           right column and the other two share the left. */}
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 grid lg:grid-cols-12 gap-x-16 gap-y-10 items-start">
         <div className="min-w-0 lg:col-span-5 lg:row-start-1 text-center lg:text-left reveal">
-          <div className="flex items-center justify-center lg:justify-start gap-3 mb-6">
-            <div className="w-8 h-px bg-gold/60" />
-            <p className="font-heading text-gold tracking-[0.4em] uppercase text-xs">Ready to fish?</p>
-            <div className="w-8 h-px bg-gold/60 lg:hidden" />
-          </div>
+          <p className={`${eyebrow} text-gold mb-6`}>Ready to fish?</p>
           <h2 className="font-heading text-5xl md:text-7xl font-bold uppercase tracking-wide leading-[0.95] mb-6">
             <span className="text-white">Let&apos;s Go </span>
-            <span className="text-shimmer">Fishing</span>
+            <span className="text-gold">Fishing</span>
           </h2>
           <p className="font-body text-white/85 text-base md:text-lg max-w-md mx-auto lg:mx-0 leading-relaxed">
             Fill in the planner and send it in one tap, or call Captain Joseph directly.

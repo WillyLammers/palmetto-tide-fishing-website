@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { eyebrow } from "./ui";
 
 export default function About({
   aggregateRating = null,
@@ -8,13 +9,6 @@ export default function About({
 }) {
   return (
     <section id="about" className="relative py-20 md:py-32 bg-white overflow-hidden">
-      <div
-        className="absolute inset-0 opacity-[0.025]"
-        style={{
-          backgroundImage: "radial-gradient(circle at 1px 1px, var(--navy) 1px, transparent 0)",
-          backgroundSize: "40px 40px",
-        }}
-      />
 
       <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-10">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
@@ -31,23 +25,20 @@ export default function About({
                 />
               </div>
 
-              <div className="absolute -bottom-5 -right-3 sm:-right-8 glass-light rounded-xl px-5 py-4 shadow-xl">
+              <div className="absolute -bottom-5 -right-3 sm:-right-8 bg-white rounded-xl px-5 py-4 shadow-xl ring-1 ring-black/5">
                 <p className="font-heading text-4xl font-bold text-ocean leading-none">15+</p>
                 <p className="font-body text-[11px] text-slate tracking-[0.15em] uppercase mt-1">Years on the water</p>
               </div>
-
-              <div className="absolute -top-4 -left-4 w-24 h-24 border-l-2 border-t-2 border-gold/30 rounded-tl-xl" aria-hidden="true" />
             </div>
           </div>
 
           <div className="lg:col-span-7 reveal" style={{ ["--reveal-delay" as string]: "150ms" }}>
             <div className="flex flex-wrap items-center gap-3 mb-5">
-              <span className="inline-flex items-center gap-1.5 font-heading text-[10px] tracking-[0.25em] uppercase text-navy bg-gold px-3 py-1.5 rounded-full">
+              <span className="inline-flex items-center gap-1.5 font-heading text-[11px] tracking-[0.2em] uppercase text-navy bg-gold px-3 py-1.5 rounded-full">
                 <span className="w-1.5 h-1.5 rounded-full bg-navy" />
                 Charleston Native
               </span>
-              <div className="section-line" />
-              <p className="font-heading text-ocean tracking-[0.3em] uppercase text-xs">Meet Your Captain</p>
+              <p className={`${eyebrow} text-ocean`}>Meet Your Captain</p>
             </div>
 
             <h2 className="font-heading text-[2.75rem] md:text-5xl lg:text-6xl font-bold text-navy uppercase tracking-wide leading-[1.02] mb-7">

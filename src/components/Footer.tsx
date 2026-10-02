@@ -1,5 +1,5 @@
 import CopyButton from "./CopyButton";
-import { GoogleIcon, InstagramIcon } from "./icons";
+import { ExternalIcon, GoogleIcon, InstagramIcon } from "./icons";
 import {
   EMAIL,
   FISHINGBOOKER_URL,
@@ -92,8 +92,8 @@ export default function Footer() {
               </li>
               <li>
                 <a href={FISHINGBOOKER_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 group">
-                  <span className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center font-heading text-[11px] text-white/70 group-hover:border-gold/60 group-hover:text-gold transition-colors">
-                    FB
+                  <span className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center group-hover:border-gold/60 transition-colors">
+                    <ExternalIcon className="w-4 h-4 text-white/70 group-hover:text-gold transition-colors" />
                   </span>
                   <span className="font-body text-white/65 text-sm group-hover:text-gold transition-colors">FishingBooker listing</span>
                 </a>

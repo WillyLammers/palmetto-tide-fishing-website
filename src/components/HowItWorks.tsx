@@ -1,3 +1,5 @@
+import { btn, eyebrow } from "./ui";
+
 // Answers "OK, how do I actually book this?" right where the question comes up,
 // under the prices. Every line restates something the FAQ already commits to;
 // nothing here is a new promise.
@@ -22,7 +24,7 @@ export default function HowItWorks() {
     <div className="mt-10 md:mt-14 rounded-2xl bg-white ring-1 ring-black/[0.07] shadow-sm p-6 sm:p-8 lg:p-10 reveal">
       <div className="flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-12">
         <div className="lg:w-56 shrink-0">
-          <p className="font-heading text-ocean tracking-[0.3em] uppercase text-xs mb-2">How it works</p>
+          <p className={`${eyebrow} text-ocean mb-2`}>How it works</p>
           <h3 className="font-heading text-3xl font-bold text-navy uppercase tracking-wide leading-none">Booking is simple</h3>
         </div>
 
@@ -46,7 +48,7 @@ export default function HowItWorks() {
         <div className="flex flex-col items-stretch sm:items-start lg:items-center gap-3 lg:w-44 shrink-0">
           <a
             href="#contact"
-            className="inline-flex items-center justify-center min-h-12 px-6 rounded-lg bg-navy text-white font-heading text-[13px] tracking-[0.2em] uppercase hover:bg-ocean transition-colors"
+            className={btn({ variant: "dark" })}
           >
             Plan your trip
           </a>

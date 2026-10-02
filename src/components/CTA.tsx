@@ -1,87 +1,91 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import BookingPlanner from "./BookingPlanner";
+import CopyButton from "./CopyButton";
+import { MailIcon, PhoneIcon } from "./icons";
+import { EMAIL, PHONE, PHONE_DISPLAY } from "@/data/site";
 
 export default function CTA() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setVisible(true);
-      },
-      { threshold: 0.2 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section id="contact" ref={sectionRef} className="relative py-32 md:py-44 overflow-hidden">
-      {/* Real photo background */}
+    <section id="contact" className="relative py-20 md:py-32 overflow-hidden bg-navy">
       <div className="absolute inset-0">
         <Image
-          src="/images/gallery/fishing-14.jpg"
-          alt="Book a Charleston inshore fishing charter with Captain Joseph Christy"
+          src="/images/gallery/fishing-10.jpg"
+          alt=""
           fill
           className="object-cover object-center"
           sizes="100vw"
         />
       </div>
-      {/* Strong overlay so text is always legible */}
-      <div className="absolute inset-0 bg-navy/82" />
-      <div className="absolute inset-0 bg-gradient-to-b from-navy/50 via-navy/20 to-navy/60" />
+      <div className="absolute inset-0 bg-navy/80" />
+      <div className="absolute inset-0 bg-gradient-to-b from-navy/70 via-navy/20 to-navy/80" />
 
-      {/* Content */}
-      <div
-        className={`relative z-10 max-w-3xl mx-auto px-6 text-center transition-all duration-[1.2s] cubic-bezier(0.16,1,0.3,1) ${
-          visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-        }`}
-      >
-        <div className="flex items-center justify-center gap-3 mb-6">
-          <div className="w-8 h-[1px] bg-gold/60" />
-          <p className="font-heading text-gold tracking-[0.4em] uppercase text-xs">
-            Ready to Fish?
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+        <div className="min-w-0 lg:col-span-5 text-center lg:text-left lg:sticky lg:top-28 reveal">
+          <div className="flex items-center justify-center lg:justify-start gap-3 mb-6">
+            <div className="w-8 h-px bg-gold/60" />
+            <p className="font-heading text-gold tracking-[0.4em] uppercase text-xs">Ready to fish?</p>
+            <div className="w-8 h-px bg-gold/60 lg:hidden" />
+          </div>
+
+          <h2 className="font-heading text-5xl md:text-7xl font-bold uppercase tracking-wide leading-[0.95] mb-6">
+            <span className="text-white">Let&apos;s Go </span>
+            <span className="text-shimmer">Fishing</span>
+          </h2>
+
+          <p className="font-body text-white/85 text-base md:text-lg max-w-md mx-auto lg:mx-0 mb-8 leading-relaxed">
+            Call or text Captain Joseph to check availability and book your trip, or fill in the planner and send it in one tap.
           </p>
-          <div className="w-8 h-[1px] bg-gold/60" />
+
+          <ul className="space-y-3 max-w-sm mx-auto lg:mx-0 text-left">
+            <li className="flex items-center gap-2">
+              <a
+                href={`tel:${PHONE}`}
+                className="flex-1 flex items-center gap-4 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 px-4 py-3.5 transition-colors"
+              >
+                <span className="w-10 h-10 rounded-full bg-gold text-navy flex items-center justify-center shrink-0">
+                  <PhoneIcon className="w-4 h-4" />
+                </span>
+                <span>
+                  <span className="block font-body text-xs text-white/60">Call or text</span>
+                  <span className="block font-heading text-lg text-white tracking-wider">{PHONE_DISPLAY}</span>
+                </span>
+              </a>
+              <CopyButton value={PHONE_DISPLAY} label="phone number" />
+            </li>
+            <li className="flex items-center gap-2">
+              <a
+                href={`mailto:${EMAIL}`}
+                className="flex-1 min-w-0 flex items-center gap-4 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 px-4 py-3.5 transition-colors"
+              >
+                <span className="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center shrink-0">
+                  <MailIcon className="w-4 h-4" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block font-body text-xs text-white/60">Email</span>
+                  <span className="block font-body text-[15px] text-white truncate">{EMAIL}</span>
+                </span>
+              </a>
+              <CopyButton value={EMAIL} label="email address" />
+            </li>
+          </ul>
+
+          <dl className="mt-8 grid grid-cols-3 gap-3 max-w-sm mx-auto lg:mx-0 text-center lg:text-left">
+            {[
+              ["Days", "7 a week"],
+              ["Trips", "AM & PM"],
+              ["Departs", "Charleston"],
+            ].map(([k, v]) => (
+              <div key={k}>
+                <dt className="font-heading text-[10px] tracking-[0.25em] uppercase text-gold/90">{k}</dt>
+                <dd className="font-body text-sm text-white/80 mt-1">{v}</dd>
+              </div>
+            ))}
+          </dl>
+
         </div>
 
-        <h2 className="font-heading text-5xl md:text-7xl font-bold uppercase tracking-wide leading-[0.95] mb-8">
-          <span className="text-white">Let&apos;s Go </span>
-          <span className="text-shimmer">Fishing</span>
-        </h2>
-
-        <p className="font-body text-white/85 text-base md:text-lg max-w-lg mx-auto mb-4 leading-relaxed">
-          Call or text Captain Joseph to check availability and book your trip.
-        </p>
-        <p className="font-body text-white/55 text-sm max-w-md mx-auto mb-12 leading-relaxed">
-          Have your preferred date, number of anglers, and trip type ready.
-        </p>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-          <Link
-            href="tel:8434714767"
-            className="px-10 py-4 bg-white text-navy font-heading text-[13px] tracking-[0.2em] uppercase hover:bg-gold transition-all duration-500 rounded shadow-2xl"
-          >
-            Call / Text (843) 471-4767
-          </Link>
-          <Link
-            href="mailto:palmettotidecharters@gmail.com"
-            className="px-10 py-4 border border-white/30 text-white font-heading text-[13px] tracking-[0.2em] uppercase hover:border-gold hover:text-gold transition-all duration-500 rounded backdrop-blur-sm"
-          >
-            Send an Email
-          </Link>
-        </div>
-
-        <div className="flex items-center justify-center gap-6 text-white/55 font-body text-xs tracking-wider uppercase">
-          <span>7 Days a Week</span>
-          <span className="w-1 h-1 bg-gold/50 rounded-full" />
-          <span>Morning &amp; Afternoon</span>
-          <span className="w-1 h-1 bg-gold/50 rounded-full" />
-          <span>Charleston, SC</span>
+        <div className="min-w-0 lg:col-span-7 reveal" style={{ ["--reveal-delay" as string]: "150ms" }}>
+          <BookingPlanner />
         </div>
       </div>
     </section>

@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 export default function About({
@@ -9,111 +6,79 @@ export default function About({
   /** Live Google average, or null when the scrape could not confirm one. */
   aggregateRating?: number | null;
 }) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setVisible(true);
-      },
-      { threshold: 0.15 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section id="about" ref={sectionRef} className="relative py-28 md:py-40 bg-white overflow-hidden">
-      {/* Subtle background texture */}
-      <div className="absolute inset-0 opacity-[0.02]" style={{
-        backgroundImage: "radial-gradient(circle at 1px 1px, var(--navy) 1px, transparent 0)",
-        backgroundSize: "40px 40px"
-      }} />
+    <section id="about" className="relative py-20 md:py-32 bg-white overflow-hidden">
+      <div
+        className="absolute inset-0 opacity-[0.025]"
+        style={{
+          backgroundImage: "radial-gradient(circle at 1px 1px, var(--navy) 1px, transparent 0)",
+          backgroundSize: "40px 40px",
+        }}
+      />
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-10">
+      <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-10">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-          {/* Image column */}
-          <div
-            className={`lg:col-span-5 transition-all duration-[1.2s] cubic-bezier(0.16,1,0.3,1) ${
-              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-            }`}
-          >
-            <div className="relative">
-              {/* Main image */}
-              <div className="relative aspect-[3/4] overflow-hidden rounded-lg shadow-2xl">
+          <div className="lg:col-span-5 reveal">
+            <div className="relative max-w-md mx-auto lg:max-w-none">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-xl shadow-2xl">
                 <Image
                   src="/images/about/about-me.jpeg"
-                  alt="Captain Joseph Christy – Palmetto Tide Charters"
+                  alt="Captain Joseph Christy holding a redfish"
                   fill
-                  className="object-cover object-top"
-                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="object-cover"
+                  style={{ objectPosition: "62% 30%" }}
+                  sizes="(min-width: 1024px) 40vw, (min-width: 448px) 448px, 100vw"
                 />
               </div>
 
-              {/* Floating accent card */}
-              <div className="absolute -bottom-6 -right-6 md:-right-10 glass-light rounded-lg p-5 shadow-xl">
+              <div className="absolute -bottom-5 -right-3 sm:-right-8 glass-light rounded-xl px-5 py-4 shadow-xl">
                 <p className="font-heading text-4xl font-bold text-ocean leading-none">15+</p>
-                <p className="font-body text-[11px] text-slate tracking-[0.15em] uppercase mt-1">Years on the Water</p>
+                <p className="font-body text-[11px] text-slate tracking-[0.15em] uppercase mt-1">Years on the water</p>
               </div>
 
-              {/* Decorative line */}
-              <div className="absolute -top-4 -left-4 w-24 h-24 border-l-2 border-t-2 border-gold/20 rounded-tl-lg" />
+              <div className="absolute -top-4 -left-4 w-24 h-24 border-l-2 border-t-2 border-gold/30 rounded-tl-xl" aria-hidden="true" />
             </div>
           </div>
 
-          {/* Content column */}
-          <div
-            className={`lg:col-span-7 transition-all duration-[1.2s] delay-200 cubic-bezier(0.16,1,0.3,1) ${
-              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-            }`}
-          >
-            <div className="flex flex-wrap items-center gap-3 mb-4">
-              <span className="inline-flex items-center gap-1.5 font-heading text-[10px] tracking-[0.25em] uppercase text-navy bg-gold/90 px-3 py-1.5 rounded-full">
+          <div className="lg:col-span-7 reveal" style={{ ["--reveal-delay" as string]: "150ms" }}>
+            <div className="flex flex-wrap items-center gap-3 mb-5">
+              <span className="inline-flex items-center gap-1.5 font-heading text-[10px] tracking-[0.25em] uppercase text-navy bg-gold px-3 py-1.5 rounded-full">
                 <span className="w-1.5 h-1.5 rounded-full bg-navy" />
                 Charleston Native
               </span>
               <div className="section-line" />
-              <p className="font-heading text-ocean tracking-[0.3em] uppercase text-xs">
-                Meet Your Captain
-              </p>
+              <p className="font-heading text-ocean tracking-[0.3em] uppercase text-xs">Meet Your Captain</p>
             </div>
 
-            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-navy uppercase tracking-wide leading-[1.05] mb-8">
-              Joseph<br />Christy
+            <h2 className="font-heading text-[2.75rem] md:text-5xl lg:text-6xl font-bold text-navy uppercase tracking-wide leading-[1.02] mb-7">
+              Joseph
+              <br />
+              Christy
             </h2>
 
-            <p className="font-body text-slate text-lg leading-[1.8] mb-6 max-w-xl">
-              Captain Joseph Christy has fished these waters for more than
-              fifteen years, since he was ten years old. He grew up in the
-              creeks behind Mount Pleasant and still runs that water today,
-              along with Charleston Harbor and the flats out past the barrier
-              islands.
+            <p className="font-body text-slate text-[17px] md:text-lg leading-[1.8] mb-5 max-w-xl">
+              Captain Joseph Christy has fished these waters for more than fifteen years, since he was ten years old. He
+              grew up in the creeks behind Mount Pleasant and still runs that water today, along with Charleston Harbor
+              and the flats out past the barrier islands.
             </p>
 
             <p className="font-body text-slate-light text-base leading-[1.8] mb-10 max-w-xl">
-              He runs a shallow-draft bay boat, which keeps the shallowest
-              water in reach. The part he cares about most is watching someone
-              land their first saltwater fish. It puts him right back to being
-              ten years old.
+              He runs a shallow-draft bay boat, which keeps the shallowest water in reach. The part he cares about most
+              is watching someone land their first saltwater fish. It puts him right back to being ten years old.
             </p>
 
-            {/* Stats row */}
-            <div className="flex gap-10 md:gap-14 pt-8 border-t border-sand-dark">
+            <dl className="grid grid-cols-3 gap-4 max-w-md pt-8 border-t border-sand-dark items-end">
               {[
-                { value: "USCG", label: "Licensed Captain" },
-                {
-                  value: aggregateRating ? aggregateRating.toFixed(1) : "5.0",
-                  label: "Star Rating",
-                },
-                { value: "6", label: "Max Anglers" },
+                { value: "USCG", label: "Licensed" },
+                { value: aggregateRating ? aggregateRating.toFixed(1) : "5.0", label: "Star rating" },
+                { value: "6", label: "Max anglers" },
               ].map((stat) => (
-                <div key={stat.label}>
-                  <p className="font-heading text-3xl md:text-4xl font-bold text-navy">{stat.value}</p>
-                  <p className="font-body text-[11px] text-slate-light tracking-[0.2em] uppercase mt-1">{stat.label}</p>
+                <div key={stat.label} className="flex flex-col-reverse">
+                  <dt className="font-body text-[11px] text-slate-light tracking-[0.18em] uppercase mt-1 whitespace-nowrap">{stat.label}</dt>
+                  <dd className="font-heading text-3xl md:text-4xl font-bold text-navy">{stat.value}</dd>
                 </div>
               ))}
-            </div>
+            </dl>
           </div>
         </div>
       </div>

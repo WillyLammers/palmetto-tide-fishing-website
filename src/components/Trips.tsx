@@ -1,165 +1,110 @@
-"use client";
-
 import Image from "next/image";
+import { trips } from "@/data/trips";
+import type { Tide } from "@/lib/tides";
+import BookTripButton from "./BookTripButton";
+import TideStrip from "./TideStrip";
+import { CheckIcon } from "./icons";
 
-const trips = [
-  {
-    id: "half-day",
-    title: "Half Day Inshore",
-    duration: "4 Hours",
-    price: "450",
-    tagline: "Redfish, trout & flounder on the Lowcountry flats.",
-    includes: ["Up to 6 anglers", "All tackle & live bait", "License covered"],
-    photo: "/images/gallery/fishing-21.jpg",
-    photoPosition: "object-top",
-  },
-  {
-    id: "full-day",
-    title: "Full Day Inshore",
-    duration: "8 Hours",
-    price: "950",
-    tagline: "All-day run through Charleston's best inshore spots.",
-    includes: ["Up to 6 anglers", "All tackle & live bait", "Cooler with water & ice"],
-    photo: "/images/gallery/fishing-22.jpg",
-    featured: true,
-    photoPosition: "object-center",
-  },
-  {
-    id: "shark-fishing",
-    title: "Shark Fishing",
-    duration: "2 Hours",
-    price: "400",
-    tagline: "Hook into hard-fighting sharks right in Charleston Harbor.",
-    includes: ["Up to 6 anglers", "All tackle & bait", "Scheduled around the tides"],
-    photo: "/images/gallery/fishing-17.jpg",
-    photoPosition: "object-center",
-  },
-  {
-    id: "shark-tooth-hunting",
-    title: "Shark Tooth Hunting",
-    duration: "2 Hours",
-    price: "350",
-    tagline: "Dig fossil shark teeth on tide-bared sandbars — everything you find, you keep.",
-    includes: ["Up to 6 guests", "Perfect for kids", "Scheduled around the tides"],
-    photo: "/images/gallery/fishing-11.jpg",
-    photoPosition: "object-center",
-  },
-];
-
-export default function Trips() {
-  const book = () =>
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-
+export default function Trips({ tides = [] }: { tides?: Tide[] }) {
   return (
-    <section id="trips" className="relative bg-[#f8f7f4] py-28 md:py-40 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        {/* Header */}
-        <div className="mb-14">
-          <div className="flex items-center gap-3 mb-5">
-            <div className="w-8 h-[1px] bg-ocean/40" />
+    <section id="trips" className="relative bg-[#f8f7f4] py-20 md:py-32 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10">
+        <div className="mb-10 md:mb-14 reveal">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-8 h-px bg-ocean/50" />
             <p className="font-heading text-ocean tracking-[0.35em] uppercase text-xs">Our Charters</p>
           </div>
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-            <h2 className="font-heading text-5xl md:text-6xl font-bold text-navy uppercase tracking-wide leading-none">
-              Fishing Trips
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+            <h2 className="font-heading text-[2.75rem] sm:text-5xl md:text-6xl font-bold text-navy uppercase tracking-wide leading-none">
+              Trips &amp; Prices
             </h2>
-            <p className="font-body text-slate text-sm leading-relaxed max-w-xs md:text-right">
-              All charters depart Charleston.<br />Everything included — just show up.
+            <p className="font-body text-slate text-[15px] leading-relaxed max-w-md lg:max-w-sm lg:text-right">
+              Private charters out of Charleston. One price for your whole group, with rods, tackle and bait included.
             </p>
           </div>
         </div>
 
-        {/* Cards */}
-        {/* Two-up from the smallest screen: four stacked cards made this the
-            tallest section on the page by a wide margin. */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
-          {trips.map((trip) => (
-            <div
+        {/* Phones: one row per trip, photo beside the details, so all four can be
+            compared at a glance without a carousel hiding half of them.
+            Tablet: 2 up. Desktop: 4 up. */}
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+          {trips.map((trip, i) => (
+            <li
               key={trip.id}
-              className={`group flex flex-col rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
-                trip.featured
-                  ? "ring-2 ring-gold/50 shadow-lg shadow-gold/10"
-                  : "ring-1 ring-black/[0.06] shadow-md shadow-black/5"
+              id={`trip-${trip.id}`}
+              className={`reveal group flex flex-row sm:flex-col rounded-2xl overflow-hidden bg-white transition-shadow duration-300 hover:shadow-xl ${
+                trip.featured ? "ring-2 ring-gold/70 shadow-lg shadow-gold/10" : "ring-1 ring-black/[0.07] shadow-md shadow-black/5"
               }`}
+              style={{ ["--reveal-delay" as string]: `${i * 90}ms` }}
             >
-              {/* Photo */}
-              <div className="relative overflow-hidden" style={{ aspectRatio: "4/3" }}>
+              <div className="relative w-[36%] shrink-0 sm:w-full sm:aspect-[4/3] overflow-hidden bg-navy/10">
                 <Image
                   src={trip.photo}
-                  alt={trip.title}
+                  alt={trip.alt}
                   fill
-                  sizes="(max-width: 1024px) 50vw, 25vw"
-                  className={`object-cover transition-transform duration-700 group-hover:scale-105 ${trip.photoPosition ?? "object-center"}`}
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 36vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  style={{ objectPosition: trip.photoPosition }}
                 />
-                {/* Duration pill — sits bottom-right on narrow screens so it
-                    cannot collide with the "Most Popular" badge on the
-                    featured card, which shares the top row. */}
-                <div className="absolute bottom-2 right-2 sm:bottom-auto sm:top-4 sm:right-4">
-                  <span className="font-heading text-[9px] sm:text-[10px] tracking-[0.15em] sm:tracking-[0.2em] uppercase bg-black/55 backdrop-blur-sm text-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-full">
-                    {trip.duration}
-                  </span>
-                </div>
-                {/* Featured badge */}
                 {trip.featured && (
-                  <div className="absolute top-2 left-2 sm:top-4 sm:left-4">
-                    <span className="font-heading text-[9px] sm:text-[10px] tracking-[0.15em] sm:tracking-[0.2em] uppercase bg-gold text-navy px-2 py-1 sm:px-3 sm:py-1.5 rounded-full font-bold">
-                      Most Popular
-                    </span>
-                  </div>
+                  <span className="absolute top-2 left-2 sm:top-3 sm:left-3 font-heading text-[10px] tracking-[0.15em] uppercase bg-gold text-navy px-2 py-1 sm:px-3 sm:py-1.5 rounded-full font-bold shadow">
+                    Most Popular
+                  </span>
                 )}
+                <span className="hidden sm:block absolute top-3 right-3 font-heading text-[11px] tracking-[0.18em] uppercase bg-black/60 backdrop-blur-sm text-white px-3 py-1.5 rounded-full">
+                  {trip.duration}
+                </span>
               </div>
 
-              {/* Content panel */}
-              <div className="flex flex-col flex-1 bg-white p-4 sm:p-6">
-                <h3 className="font-heading text-base sm:text-xl font-bold text-navy uppercase tracking-wide mb-1.5 sm:mb-2">
+              <div className="flex flex-col flex-1 min-w-0 p-4 sm:p-6">
+                <p className="sm:hidden font-heading text-[11px] tracking-[0.2em] uppercase text-ocean mb-1">{trip.duration}</p>
+                <h3 className="font-heading text-lg sm:text-xl font-bold text-navy uppercase tracking-wide leading-tight mb-1.5 sm:mb-2">
                   {trip.title}
                 </h3>
-                <p className="font-body text-slate text-xs sm:text-sm leading-relaxed mb-4 sm:mb-5">
-                  {trip.tagline}
-                </p>
+                <p className="font-body text-slate text-[13.5px] sm:text-sm leading-relaxed mb-3 sm:mb-5">{trip.tagline}</p>
 
-                {/* Includes */}
-                <ul className="space-y-1.5 sm:space-y-2 mb-4 sm:mb-6 flex-1">
+                <ul className="hidden sm:block space-y-2 mb-6 flex-1">
                   {trip.includes.map((item) => (
-                    <li key={item} className="flex items-start gap-2 sm:gap-2.5 font-body text-[11px] sm:text-sm text-slate">
-                      <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5 mt-0.5 text-ocean flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                      </svg>
+                    <li key={item} className="flex items-start gap-2.5 font-body text-sm text-slate">
+                      <CheckIcon className="w-3.5 h-3.5 mt-[3px] text-ocean shrink-0" />
                       {item}
                     </li>
                   ))}
                 </ul>
+                <p className="sm:hidden font-body text-[12.5px] text-slate-light leading-snug mb-3 flex-1">
+                  {trip.includes.join(" · ")}
+                </p>
 
-                {/* Price + CTA */}
-                <div className="pt-4 sm:pt-5 border-t border-black/[0.06] flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  <div>
-                    <div className="flex items-baseline gap-0.5">
-                      <span className="font-body text-slate text-xs sm:text-sm">$</span>
-                      <span className="font-heading text-2xl sm:text-3xl font-bold text-navy">{trip.price}</span>
-                    </div>
-                    <p className="font-body text-[10px] sm:text-[11px] text-slate-light tracking-wider uppercase">per trip</p>
-                  </div>
-                  <button
-                    onClick={book}
-                    className={`font-heading text-[10px] sm:text-[11px] tracking-[0.15em] sm:tracking-[0.2em] uppercase px-3 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all duration-300 flex-shrink-0 ${
+                <div className="flex items-center justify-between gap-3 pt-3 sm:pt-5 border-t border-black/[0.07]">
+                  <p className="leading-none">
+                    <span className="font-body text-slate text-sm align-top">$</span>
+                    <span className="font-heading text-[1.75rem] sm:text-3xl font-bold text-navy">{trip.price}</span>
+                    <span className="block font-body text-[10.5px] text-slate-light tracking-wider uppercase mt-1">per trip</span>
+                  </p>
+                  <BookTripButton
+                    tripId={trip.id}
+                    label={`Book the ${trip.title} trip`}
+                    className={`inline-flex items-center justify-center min-h-11 font-heading text-[12px] tracking-[0.18em] uppercase px-4 sm:px-5 rounded-xl transition-colors duration-300 shrink-0 ${
                       trip.featured
-                        ? "bg-gold text-navy hover:bg-gold/90 shadow-md shadow-gold/20"
-                        : "border border-navy/20 text-navy hover:bg-navy hover:text-white"
+                        ? "bg-gold text-navy hover:bg-gold-light shadow-md shadow-gold/20"
+                        : "border border-navy/25 text-navy hover:bg-navy hover:text-white"
                     }`}
                   >
-                    Book Now
-                  </button>
+                    Book
+                  </BookTripButton>
                 </div>
               </div>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
 
-        <p className="font-body text-slate-light text-xs text-center mt-8 tracking-wide">
-          Private charters only — your group, your pace.{" "}
-          <button onClick={book} className="text-slate hover:text-ocean underline underline-offset-2 transition-colors duration-200">
-            Questions? Get in touch.
-          </button>
+        <TideStrip tides={tides} />
+
+        <p className="font-body text-slate-light text-[13px] text-center mt-8 tracking-wide">
+          Private charters only: your group, your pace.{" "}
+          <a href="#faq" className="text-slate hover:text-ocean underline underline-offset-2 transition-colors">
+            Questions? See the FAQ.
+          </a>
         </p>
       </div>
     </section>

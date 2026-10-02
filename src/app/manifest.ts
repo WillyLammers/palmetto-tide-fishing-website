@@ -8,8 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
       "Charleston, SC inshore fishing charters with Captain Joseph Christy.",
     start_url: "/",
     display: "standalone",
-    background_color: "#0a2540",
-    theme_color: "#0a2540",
+    background_color: "#04111d",
+    theme_color: "#04111d",
     orientation: "portrait",
     icons: [
       {

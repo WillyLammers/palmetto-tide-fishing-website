@@ -17,6 +17,7 @@ const CLAMP_AT = 260; // characters before "Read more"
 
 function ReviewCard({ review }: { review: Review }) {
   const [expanded, setExpanded] = useState(false);
+  const [avatarFailed, setAvatarFailed] = useState(false);
   const long = review.review.length > CLAMP_AT;
 
   return (
@@ -26,7 +27,7 @@ function ReviewCard({ review }: { review: Review }) {
         {review.date && <span className="font-body text-slate-light text-xs">{review.date}</span>}
       </div>
 
-      <blockquote className="font-body text-slate leading-[1.75] text-[15px] flex-1">
+      <blockquote className="font-body text-slate leading-[1.75] text-[15px]">
         <p className={long && !expanded ? "line-clamp-6" : undefined}>&ldquo;{review.review}&rdquo;</p>
         {long && (
           <button
@@ -44,14 +45,15 @@ function ReviewCard({ review }: { review: Review }) {
         <ReviewImages images={review.images} alt={`${review.name}'s trip`} />
       )}
 
-      <footer className="flex items-center gap-3 pt-4 border-t border-black/[0.07]">
-        {review.avatarUrl ? (
+      <footer className="mt-auto flex items-center gap-3 pt-4 border-t border-black/[0.07]">
+        {review.avatarUrl && !avatarFailed ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={review.avatarUrl}
             alt=""
             referrerPolicy="no-referrer"
             loading="lazy"
+            onError={() => setAvatarFailed(true)}
             className="w-10 h-10 rounded-full object-cover shrink-0"
           />
         ) : (
@@ -213,7 +215,8 @@ export default function Testimonials({
           </button>
         </div>
 
-        <div className="hidden sm:flex gap-1 items-center" aria-hidden="true">
+        {/* Dots stop being readable past a handful; the live feed carries up to 20. */}
+        <div className={`${reviews.length <= 8 ? "hidden sm:flex" : "hidden"} gap-1 items-center`} aria-hidden="true">
           {reviews.map((_, i) => (
             <button
               key={i}
@@ -230,7 +233,7 @@ export default function Testimonials({
             </button>
           ))}
         </div>
-        <p className="sm:hidden font-heading text-xs tracking-[0.2em] text-navy/60" aria-hidden="true">
+        <p className={`${reviews.length <= 8 ? "sm:hidden" : ""} font-heading text-xs tracking-[0.2em] text-slate`} aria-hidden="true">
           {Math.min(active + 1, reviews.length)} / {reviews.length}
         </p>
 

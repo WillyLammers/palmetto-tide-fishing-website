@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ChevronIcon } from "./icons";
+import { lockScroll } from "@/lib/scrollLock";
 
 export type LightboxPhoto = { src: string; alt: string };
 
@@ -48,12 +49,11 @@ export default function Lightbox({
 
   useEffect(() => {
     if (!open) return;
-    const root = document.documentElement;
     restoreRef.current = document.activeElement as HTMLElement | null;
-    root.setAttribute("data-lock", "");
+    const unlock = lockScroll();
     closeRef.current?.focus();
     return () => {
-      root.removeAttribute("data-lock");
+      unlock();
       restoreRef.current?.focus?.();
     };
   }, [open]);
@@ -65,12 +65,16 @@ export default function Lightbox({
       else if (e.key === "ArrowLeft") go(-1);
       else if (e.key === "ArrowRight") go(1);
       else if (e.key === "Tab") {
-        // Keep focus inside the dialog.
+        // Keep focus inside the dialog, including when a click on the photo
+        // has dropped focus back to <body>.
         const f = document.querySelectorAll<HTMLElement>("[data-lightbox] button");
         if (!f.length) return;
         const first = f[0];
         const last = f[f.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
+        if (!document.activeElement?.closest("[data-lightbox]")) {
+          e.preventDefault();
+          (e.shiftKey ? last : first).focus();
+        } else if (e.shiftKey && document.activeElement === first) {
           e.preventDefault();
           last.focus();
         } else if (!e.shiftKey && document.activeElement === last) {
@@ -85,7 +89,23 @@ export default function Lightbox({
 
   if (!open || index === null) return null;
 
-  const neighbours = count > 1 ? [(index - 1 + count) % count, (index + 1) % count] : [];
+  // A Set, because with exactly two photos "previous" and "next" are the same one.
+  const neighbours = count > 1 ? [...new Set([(index - 1 + count) % count, (index + 1) % count])] : [];
+
+  // The <img> fills the whole stage (object-contain), so a tap in the black
+  // letterbox beside the photo still lands on it. Only swallow taps that hit
+  // the picture itself; anything else falls through to the backdrop and closes.
+  const onPhotoClick = (e: React.MouseEvent<HTMLImageElement>) => {
+    const img = e.currentTarget;
+    if (!img.naturalWidth) return e.stopPropagation();
+    const r = img.getBoundingClientRect();
+    const scale = Math.min(r.width / img.naturalWidth, r.height / img.naturalHeight);
+    const w = img.naturalWidth * scale;
+    const h = img.naturalHeight * scale;
+    const left = r.left + (r.width - w) / 2;
+    const top = r.top + (r.height - h) / 2;
+    if (e.clientX >= left && e.clientX <= left + w && e.clientY >= top && e.clientY <= top + h) e.stopPropagation();
+  };
 
   return (
     <div
@@ -95,17 +115,24 @@ export default function Lightbox({
       aria-label={`Photo ${index + 1} of ${count}`}
       className="fixed inset-0 z-[100] bg-black animate-fade-in select-none"
       onClick={onClose}
+      // Single-finger gestures only: a second finger means pinch-zoom, which
+      // must never be read as a swipe to the next photo.
       onTouchStart={(e) => {
+        if (e.touches.length > 1) {
+          touch.current = null;
+          setDrag(0);
+          return;
+        }
         touch.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
       }}
       onTouchMove={(e) => {
-        if (!touch.current) return;
+        if (!touch.current || e.touches.length > 1) return;
         const dx = e.touches[0].clientX - touch.current.x;
         const dy = e.touches[0].clientY - touch.current.y;
         if (Math.abs(dx) > Math.abs(dy)) setDrag(dx);
       }}
       onTouchEnd={(e) => {
-        if (!touch.current) return;
+        if (!touch.current || e.touches.length > 0) return;
         const dx = e.changedTouches[0].clientX - touch.current.x;
         const dy = e.changedTouches[0].clientY - touch.current.y;
         touch.current = null;
@@ -128,7 +155,7 @@ export default function Lightbox({
           referrerPolicy={external ? "no-referrer" : undefined}
           loading="eager"
           className="object-contain animate-fade-in"
-          onClick={(e) => e.stopPropagation()}
+          onClick={onPhotoClick}
         />
         {neighbours.map((n) => (
           <Image

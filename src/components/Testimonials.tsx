@@ -96,8 +96,11 @@ export default function Testimonials({
     if (!el) return;
     const card = el.firstElementChild as HTMLElement | null;
     const step = card ? card.offsetWidth + parseFloat(getComputedStyle(el).columnGap || "0") : el.clientWidth;
-    setActive(Math.round(el.scrollLeft / step));
-    setEdges({ start: el.scrollLeft < 8, end: el.scrollLeft + el.clientWidth > el.scrollWidth - 8 });
+    const atEnd = el.scrollLeft + el.clientWidth > el.scrollWidth - 8;
+    // On wide screens the last cards can never snap to the start, so the end
+    // of the rail counts as the last review.
+    setActive(atEnd ? el.children.length - 1 : Math.round(el.scrollLeft / step));
+    setEdges({ start: el.scrollLeft < 8, end: atEnd });
   }, []);
 
   useEffect(() => {

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { PHONE, PHONE_DISPLAY, INSTAGRAM_URL, INSTAGRAM_HANDLE, smsHref } from "@/data/site";
 import { PhoneIcon, TextIcon } from "@/components/icons";
+import { lockScroll } from "@/lib/scrollLock";
 
 const navLinks = [
   { href: "#trips", label: "Trips" },
@@ -45,18 +46,19 @@ export default function Header() {
 
   const close = useCallback(() => setOpen(false), []);
 
-  // Lock scroll behind the open menu, close on Escape, and return focus to the
-  // toggle afterwards so keyboard users are not dropped at the top of the page.
+  // While the menu is open: lock scroll, make the page behind it inert so Tab
+  // cannot wander into content hidden under the overlay, close on Escape, and
+  // return focus to the toggle afterwards.
   useEffect(() => {
+    if (!open) return;
     const root = document.documentElement;
-    if (!open) {
-      root.removeAttribute("data-menu");
-      root.removeAttribute("data-lock");
-      return;
-    }
+    const behind = [...document.querySelectorAll<HTMLElement>("main, body > footer")];
+    const unlock = lockScroll();
     root.setAttribute("data-menu", "open");
-    root.setAttribute("data-lock", "");
-    menuRef.current?.querySelector<HTMLElement>("a")?.focus();
+    behind.forEach((el) => el.setAttribute("inert", ""));
+    // Next frame: the menu's visibility has to have taken effect before it can
+    // take focus, and in the same task as the click it has not.
+    const frame = requestAnimationFrame(() => menuRef.current?.querySelector<HTMLElement>("a")?.focus());
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setOpen(false);
@@ -67,6 +69,10 @@ export default function Header() {
     window.addEventListener("keydown", onKey);
     window.addEventListener("resize", onResize);
     return () => {
+      cancelAnimationFrame(frame);
+      unlock();
+      root.removeAttribute("data-menu");
+      behind.forEach((el) => el.removeAttribute("inert"));
       window.removeEventListener("keydown", onKey);
       window.removeEventListener("resize", onResize);
     };
@@ -162,8 +168,10 @@ export default function Header() {
         id="mobile-menu"
         ref={menuRef}
         inert={!open}
-        className={`lg:hidden fixed inset-0 z-40 bg-navy flex flex-col pt-24 pb-[calc(1.5rem+env(safe-area-inset-bottom))] px-6 transition-[opacity,visibility] duration-300 ${
-          open ? "opacity-100 visible" : "opacity-0 invisible"
+        // Visibility flips instantly on open, so focus() can land in the menu
+        // in the same frame; it only transitions on close, to let the fade run.
+        className={`lg:hidden fixed inset-0 z-40 bg-navy flex flex-col pt-24 pb-[calc(1.5rem+env(safe-area-inset-bottom))] px-6 duration-300 ${
+          open ? "opacity-100 visible transition-opacity" : "opacity-0 invisible transition-[opacity,visibility]"
         }`}
       >
         <nav aria-label="Mobile" className="flex-1 flex flex-col justify-center gap-1 overflow-y-auto">
@@ -172,7 +180,7 @@ export default function Header() {
               key={link.href}
               href={link.href}
               onClick={close}
-              className={`font-heading text-[32px] leading-tight text-white uppercase tracking-[0.08em] py-2 transition-all duration-500 ${
+              className={`font-heading text-[32px] leading-tight text-white uppercase tracking-[0.08em] py-2 transition-[opacity,transform] duration-500 ${
                 open ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
               }`}
               style={{ transitionDelay: open ? `${80 + i * 45}ms` : "0ms" }}

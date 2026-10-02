@@ -1,4 +1,5 @@
 import CopyButton from "./CopyButton";
+import { trips } from "@/data/trips";
 import { ExternalIcon, GoogleIcon, InstagramIcon } from "./icons";
 import {
   EMAIL,
@@ -108,6 +109,22 @@ export default function Footer() {
           </p>
           <p className="font-body text-white/50 text-xs tracking-wider">USCG licensed · Charleston, SC</p>
         </div>
+
+        {/* Attribution the photo licences require. */}
+        {trips
+          .filter((t) => t.photoCredit)
+          .map((t) => (
+            <p key={t.id} className="mt-4 font-body text-white/40 text-[11px] text-center md:text-left">
+              {t.title} photo:{" "}
+              <a href={t.photoCredit!.source} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-white/70">
+                {t.photoCredit!.author}
+              </a>
+              , cropped,{" "}
+              <a href={t.photoCredit!.licenseUrl} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-white/70">
+                {t.photoCredit!.license}
+              </a>
+            </p>
+          ))}
       </div>
     </footer>
   );

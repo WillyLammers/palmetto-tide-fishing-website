@@ -14,6 +14,8 @@ export type Trip = {
   /** object-position for the 4:3 card crop of a portrait photo. */
   photoPosition: string;
   alt: string;
+  /** Required for any photo that is not Joseph's own; shown in the footer. */
+  photoCredit?: { author: string; source: string; license: string; licenseUrl: string };
   featured?: boolean;
   schemaName: string;
   schemaDescription: string;
@@ -74,9 +76,19 @@ export const trips: Trip[] = [
     price: 350,
     tagline: "Dig fossil shark teeth on tide-bared sandbars. Everything you find, you keep.",
     includes: ["Up to 6 guests", "Perfect for kids", "Scheduled around the tides"],
-    photo: "/images/gallery/fishing-11.jpg",
-    photoPosition: "50% 50%",
-    alt: "Young guest with a small shark on a Palmetto Tide trip in Charleston",
+    // A real fossil tooth from the Chandler Bridge Formation outside
+    // Charleston, licensed from Wikimedia Commons. Not from one of Joseph's
+    // trips, so the alt text does not claim it is; swap in his own photo of a
+    // day's finds when he has one, and drop photoCredit.
+    photo: "/images/trips/shark-tooth-chandler-bridge-sc.jpg",
+    photoPosition: "56% 50%",
+    alt: "Fossil shark tooth from South Carolina's Chandler Bridge Formation, held between two fingers",
+    photoCredit: {
+      author: "Mason Hintermeister",
+      source: "https://commons.wikimedia.org/wiki/File:Trigonotodus_alteri_lateral_tooth_(Oligocene,_Chandler_Bridge_FM,_SC).jpg",
+      license: "CC BY-SA 4.0",
+      licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+    },
     schemaName: "Charleston Shark Tooth Hunting Trip",
     schemaDescription:
       "2-hour shark tooth hunting trip scheduled around low tide. Hunt fossilized shark teeth, including megalodon, on Charleston's tide-bared sandbars and banks. Perfect for kids and families. Up to 6 guests. Everything you find, you keep.",

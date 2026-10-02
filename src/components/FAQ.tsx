@@ -1,5 +1,6 @@
 import { faqs } from "@/data/faq";
 import { PHONE, PHONE_DISPLAY, EMAIL } from "@/data/site";
+import { eyebrow } from "./ui";
 
 /** Turns the phone number and email in an answer into tappable links. */
 function linkify(text: string) {
@@ -24,10 +25,7 @@ export default function FAQ() {
     <section id="faq" className="relative py-20 md:py-32 bg-[#f8f7f4]">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 grid lg:grid-cols-12 gap-10 lg:gap-16">
         <div className="lg:col-span-4 reveal">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-px bg-ocean/50" />
-            <p className="font-heading text-ocean tracking-[0.3em] uppercase text-xs">Good to know</p>
-          </div>
+          <p className={`${eyebrow} text-ocean mb-4`}>Good to know</p>
           <h2 className="font-heading text-[2.75rem] sm:text-5xl md:text-6xl font-bold text-navy uppercase tracking-wide leading-none mb-6">
             FAQ
           </h2>

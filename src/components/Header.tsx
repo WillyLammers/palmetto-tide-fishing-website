@@ -5,6 +5,7 @@ import Image from "next/image";
 import { PHONE, PHONE_DISPLAY, INSTAGRAM_URL, INSTAGRAM_HANDLE, smsHref } from "@/data/site";
 import { PhoneIcon, TextIcon } from "@/components/icons";
 import { lockScroll } from "@/lib/scrollLock";
+import { btn } from "./ui";
 
 const navLinks = [
   { href: "#trips", label: "Trips" },
@@ -104,7 +105,7 @@ export default function Header() {
               height={140}
               loading="eager"
               sizes="(min-width: 1024px) 120px, 80px"
-              className={`object-contain drop-shadow-[0_2px_12px_rgba(255,255,255,0.25)] transition-[width,height] duration-500 ease-out ${
+              className={`object-contain transition-[width,height] duration-500 ease-out ${
                 solid ? "h-12 w-12 lg:h-14 lg:w-14" : "h-16 w-16 md:h-20 md:w-20 lg:h-[112px] lg:w-[112px]"
               }`}
             />
@@ -136,7 +137,7 @@ export default function Header() {
             </a>
             <a
               href="#contact"
-              className="px-6 py-2.5 bg-gold text-navy font-heading text-[13px] tracking-[0.2em] uppercase hover:bg-gold-light transition-colors duration-300 rounded"
+              className={btn({ size: "sm", className: "px-5" })}
             >
               Book a Trip
             </a>
@@ -194,20 +195,20 @@ export default function Header() {
           <a
             href="#contact"
             onClick={close}
-            className="block w-full text-center py-4 rounded-lg bg-white text-navy font-heading text-[14px] tracking-[0.2em] uppercase"
+            className={btn({ variant: "light", size: "lg", className: "w-full" })}
           >
             Plan Your Trip
           </a>
           <div className="grid grid-cols-2 gap-3">
             <a
               href={`tel:${PHONE}`}
-              className="flex items-center justify-center gap-2 py-4 rounded-lg bg-gold text-navy font-heading text-[13px] tracking-[0.2em] uppercase"
+              className={btn({ size: "lg" })}
             >
               <PhoneIcon className="w-4 h-4" /> Call
             </a>
             <a
               href={smsHref("Hi Captain Joseph, I'd like to book a fishing trip.")}
-              className="flex items-center justify-center gap-2 py-4 rounded-lg border border-white/30 text-white font-heading text-[13px] tracking-[0.2em] uppercase"
+              className={btn({ variant: "outlineLight", size: "lg" })}
             >
               <TextIcon className="w-4 h-4" /> Text
             </a>

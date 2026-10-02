@@ -120,10 +120,6 @@ html[data-lock] .call-bar {
   to { transform: scale(1.08); }
 }
 
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
 
 @keyframes fadeIn {
   from { opacity: 0; }
@@ -174,36 +170,8 @@ html[data-lock] .call-bar {
   }
 }
 
-/* Premium gold shimmer text */
-.text-shimmer {
-  background: linear-gradient(
-    110deg,
-    var(--gold) 0%,
-    var(--gold-light) 40%,
-    #e8d48b 50%,
-    var(--gold-light) 60%,
-    var(--gold) 100%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shimmer 4s linear infinite;
-}
 
-/* Section divider */
-.section-line {
-  width: 60px;
-  height: 2px;
-  background: linear-gradient(90deg, var(--gold), var(--ocean-blue));
-}
 
-.glass-light {
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-}
 
 /* FAQ disclosure marker */
 details > summary {

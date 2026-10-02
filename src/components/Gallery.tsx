@@ -6,6 +6,7 @@ import { galleryPhotos } from "@/data/gallery";
 import Lightbox from "./Lightbox";
 import { ChevronIcon, InstagramIcon } from "./icons";
 import { INSTAGRAM_URL } from "@/data/site";
+import { btn, eyebrow } from "./ui";
 
 // Thumbnails are mounted in batches as the rail is scrolled. Rendering all 100+
 // up front tripled the page's DOM and made hydration the slowest thing on a
@@ -83,10 +84,7 @@ export default function Gallery() {
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-10 md:mb-12 reveal">
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="section-line" />
-              <p className="font-heading text-ocean tracking-[0.3em] uppercase text-xs">Fresh off the boat</p>
-            </div>
+            <p className={`${eyebrow} text-ocean mb-4`}>Fresh off the boat</p>
             <h2 className="font-heading text-[2.75rem] sm:text-5xl md:text-6xl font-bold text-navy uppercase tracking-wide leading-none">
               Photo Gallery
             </h2>
@@ -159,7 +157,7 @@ export default function Gallery() {
       </div>
 
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 mt-8 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <p className="font-heading text-[11px] tracking-[0.3em] uppercase text-slate">
+        <p className="font-heading text-[11px] tracking-[0.2em] uppercase text-slate">
           <span className="md:hidden">Swipe for more</span>
           <span className="hidden md:inline">Scroll or use the arrows</span>
         </p>
@@ -167,10 +165,10 @@ export default function Gallery() {
           href={INSTAGRAM_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2.5 rounded-full border border-navy/15 px-5 py-2.5 text-navy hover:border-ocean hover:text-ocean transition-colors"
+          className={btn({ variant: "outline", size: "sm" })}
         >
           <InstagramIcon className="w-4 h-4 shrink-0" />
-          <span className="font-body text-sm whitespace-nowrap">More catches on Instagram</span>
+          More on Instagram
         </a>
       </div>
 

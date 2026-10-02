@@ -3,16 +3,14 @@ import { trips } from "@/data/trips";
 import BookTripButton from "./BookTripButton";
 import HowItWorks from "./HowItWorks";
 import { CheckIcon } from "./icons";
+import { btn, eyebrow } from "./ui";
 
 export default function Trips() {
   return (
     <section id="trips" className="relative bg-[#f8f7f4] py-20 md:py-32 overflow-hidden">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10">
         <div className="mb-10 md:mb-14 reveal">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-px bg-ocean/50" />
-            <p className="font-heading text-ocean tracking-[0.35em] uppercase text-xs">Our Charters</p>
-          </div>
+          <p className={`${eyebrow} text-ocean mb-4`}>Our Charters</p>
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
             <h2 className="font-heading text-[2.75rem] sm:text-5xl md:text-6xl font-bold text-navy uppercase tracking-wide leading-none">
               Trips &amp; Prices
@@ -83,11 +81,7 @@ export default function Trips() {
                   <BookTripButton
                     tripId={trip.id}
                     label={`Book the ${trip.title} trip`}
-                    className={`inline-flex items-center justify-center min-h-11 font-heading text-[12px] tracking-[0.18em] uppercase px-4 sm:px-5 rounded-xl transition-colors duration-300 shrink-0 ${
-                      trip.featured
-                        ? "bg-gold text-navy hover:bg-gold-light shadow-md shadow-gold/20"
-                        : "border border-navy/25 text-navy hover:bg-navy hover:text-white"
-                    }`}
+                    className={btn({ variant: trip.featured ? "primary" : "outline", size: "sm", className: "shrink-0" })}
                   >
                     Book
                   </BookTripButton>

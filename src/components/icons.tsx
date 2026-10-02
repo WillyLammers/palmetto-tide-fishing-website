@@ -77,3 +77,11 @@ export function MailIcon({ className = "" }: { className?: string }) {
     </svg>
   );
 }
+
+export function ExternalIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M14 4h6v6M20 4l-9 9M18 14v4a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2h4" />
+    </svg>
+  );
+}

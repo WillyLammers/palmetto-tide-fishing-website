@@ -16,7 +16,9 @@ export const INSTAGRAM_HANDLE = "@palmettotidecharters";
 export const GOOGLE_REVIEWS_URL = "https://www.google.com/maps?cid=11335332628536409892";
 export const FISHINGBOOKER_URL = "https://fishingbooker.com/charters/view/42857";
 
-export const OG_IMAGE = "/images/og/palmetto-tide-og.jpg";
+// Versioned: /images/* is cached immutable for a year, so a new share image
+// needs a new filename to reach anyone.
+export const OG_IMAGE = "/images/og/palmetto-tide-og-v2.jpg";
 
 /**
  * An sms: link with a prefilled message.

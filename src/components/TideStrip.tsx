@@ -57,20 +57,27 @@ export default function TideStrip({ tides }: { tides: Tide[] }) {
   const today = now?.slice(0, 10) ?? "";
 
   return (
-    <div className="mt-10 rounded-2xl bg-navy text-white px-5 py-5 sm:px-7 sm:py-6 flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-8">
-      <div className="flex items-center gap-3 lg:w-52 shrink-0">
-        <svg className="w-8 h-8 text-gold shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} aria-hidden="true">
-          <path strokeLinecap="round" d="M2 15c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2M2 19c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2M12 3v7m0 0l-3-3m3 3l3-3" />
-        </svg>
-        <div>
-          <p className="font-heading text-sm tracking-[0.2em] uppercase">Charleston Tides</p>
-          <p className="font-body text-xs text-white/60">Next tides at the harbor</p>
+    <div className="rounded-2xl bg-white/[0.05] border border-white/10 text-white p-4 sm:p-5">
+      <div className="flex items-center justify-between gap-3 mb-3">
+        <div className="flex items-center gap-2.5">
+          <svg className="w-6 h-6 text-gold shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} aria-hidden="true">
+            <path strokeLinecap="round" d="M2 15c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2M2 19c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2M12 3v7m0 0l-3-3m3 3l3-3" />
+          </svg>
+          <p className="font-heading text-[13px] tracking-[0.15em] uppercase whitespace-nowrap">Charleston Harbor tides</p>
         </div>
+        <a
+          href="https://tidesandcurrents.noaa.gov/stationhome.html?id=8665530"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-body text-[11px] text-white/50 underline underline-offset-2 hover:text-gold shrink-0"
+        >
+          NOAA
+        </a>
       </div>
 
-      <ul className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 flex-1 min-h-[60px]">
+      <ul className="grid grid-cols-2 gap-2 min-h-[116px]">
         {upcoming.map((t) => (
-          <li key={t.t} className="rounded-xl bg-white/[0.06] border border-white/10 px-3.5 py-2.5">
+          <li key={t.t} className="rounded-xl bg-white/[0.06] px-3.5 py-2.5">
             <p className="font-body text-[11px] uppercase tracking-[0.12em] text-white/60 whitespace-nowrap">
               <span className={t.type === "L" ? "text-gold" : "text-white/85"}>{t.type === "H" ? "High" : "Low"}</span>
               {" · "}
@@ -78,25 +85,11 @@ export default function TideStrip({ tides }: { tides: Tide[] }) {
             </p>
             <p className="font-heading text-lg leading-tight mt-0.5">
               {formatTime(t.t)}
-              <span className="ml-2 text-xs font-body text-white/50">
-                {t.ft.toFixed(1)} ft
-              </span>
+              <span className="ml-2 text-xs font-body text-white/50">{t.ft.toFixed(1)} ft</span>
             </p>
           </li>
         ))}
       </ul>
-
-      <p className="font-body text-[11px] text-white/45 lg:w-24 lg:text-right shrink-0">
-        Predictions from{" "}
-        <a
-          href="https://tidesandcurrents.noaa.gov/stationhome.html?id=8665530"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline underline-offset-2 hover:text-gold"
-        >
-          NOAA
-        </a>
-      </p>
     </div>
   );
 }

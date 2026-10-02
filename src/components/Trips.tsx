@@ -1,11 +1,10 @@
 import Image from "next/image";
 import { trips } from "@/data/trips";
-import type { Tide } from "@/lib/tides";
 import BookTripButton from "./BookTripButton";
-import TideStrip from "./TideStrip";
+import HowItWorks from "./HowItWorks";
 import { CheckIcon } from "./icons";
 
-export default function Trips({ tides = [] }: { tides?: Tide[] }) {
+export default function Trips() {
   return (
     <section id="trips" className="relative bg-[#f8f7f4] py-20 md:py-32 overflow-hidden">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10">
@@ -79,7 +78,7 @@ export default function Trips({ tides = [] }: { tides?: Tide[] }) {
                   <p className="leading-none">
                     <span className="font-body text-slate text-sm align-top">$</span>
                     <span className="font-heading text-[1.75rem] sm:text-3xl font-bold text-navy">{trip.price}</span>
-                    <span className="block font-body text-[10.5px] text-slate-light tracking-wider uppercase mt-1">per trip</span>
+                    <span className="block font-body text-[10.5px] text-slate-light tracking-wider uppercase mt-1 whitespace-nowrap">for your group</span>
                   </p>
                   <BookTripButton
                     tripId={trip.id}
@@ -98,14 +97,7 @@ export default function Trips({ tides = [] }: { tides?: Tide[] }) {
           ))}
         </ul>
 
-        <TideStrip tides={tides} />
-
-        <p className="font-body text-slate-light text-[13px] text-center mt-8 tracking-wide">
-          Private charters only: your group, your pace.{" "}
-          <a href="#faq" className="text-slate hover:text-ocean underline underline-offset-2 transition-colors">
-            Questions? See the FAQ.
-          </a>
-        </p>
+        <HowItWorks />
       </div>
     </section>
   );

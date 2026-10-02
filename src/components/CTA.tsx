@@ -1,42 +1,49 @@
 import Image from "next/image";
 import BookingPlanner from "./BookingPlanner";
 import CopyButton from "./CopyButton";
+import TideStrip from "./TideStrip";
 import { MailIcon, PhoneIcon } from "./icons";
 import { EMAIL, PHONE, PHONE_DISPLAY } from "@/data/site";
+import type { Tide } from "@/lib/tides";
 
-export default function CTA() {
+export default function CTA({ tides = [] }: { tides?: Tide[] }) {
   return (
     <section id="contact" className="relative py-20 md:py-32 overflow-hidden bg-navy">
       <div className="absolute inset-0">
-        <Image
-          src="/images/gallery/fishing-10.jpg"
-          alt=""
-          fill
-          className="object-cover object-center"
-          sizes="100vw"
-        />
+        <Image src="/images/gallery/fishing-10.jpg" alt="" fill className="object-cover object-center" sizes="100vw" />
       </div>
       <div className="absolute inset-0 bg-navy/80" />
       <div className="absolute inset-0 bg-gradient-to-b from-navy/70 via-navy/20 to-navy/80" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-        <div className="min-w-0 lg:col-span-5 text-center lg:text-left lg:sticky lg:top-28 reveal">
+      {/* Three blocks in reading order: headline, planner, then the direct
+          details. On phones they stack in that order, so the planner is the
+          first thing under the headline; on desktop the planner takes the
+          right column and the other two share the left. */}
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 grid lg:grid-cols-12 gap-x-16 gap-y-10 items-start">
+        <div className="min-w-0 lg:col-span-5 lg:row-start-1 text-center lg:text-left reveal">
           <div className="flex items-center justify-center lg:justify-start gap-3 mb-6">
             <div className="w-8 h-px bg-gold/60" />
             <p className="font-heading text-gold tracking-[0.4em] uppercase text-xs">Ready to fish?</p>
             <div className="w-8 h-px bg-gold/60 lg:hidden" />
           </div>
-
           <h2 className="font-heading text-5xl md:text-7xl font-bold uppercase tracking-wide leading-[0.95] mb-6">
             <span className="text-white">Let&apos;s Go </span>
             <span className="text-shimmer">Fishing</span>
           </h2>
-
-          <p className="font-body text-white/85 text-base md:text-lg max-w-md mx-auto lg:mx-0 mb-8 leading-relaxed">
-            Call or text Captain Joseph to check availability and book your trip, or fill in the planner and send it in one tap.
+          <p className="font-body text-white/85 text-base md:text-lg max-w-md mx-auto lg:mx-0 leading-relaxed">
+            Fill in the planner and send it in one tap, or call Captain Joseph directly.
           </p>
+        </div>
 
-          <ul className="space-y-3 max-w-sm mx-auto lg:mx-0 text-left">
+        <div
+          className="min-w-0 lg:col-span-7 lg:col-start-6 lg:row-start-1 lg:row-span-2 reveal"
+          style={{ ["--reveal-delay" as string]: "150ms" }}
+        >
+          <BookingPlanner />
+        </div>
+
+        <div className="min-w-0 lg:col-span-5 lg:row-start-2 space-y-8 reveal">
+          <ul className="space-y-3 max-w-md mx-auto lg:mx-0">
             <li className="flex items-center gap-2">
               <a
                 href={`tel:${PHONE}`}
@@ -69,7 +76,7 @@ export default function CTA() {
             </li>
           </ul>
 
-          <dl className="mt-8 grid grid-cols-3 gap-3 max-w-sm mx-auto lg:mx-0 text-center lg:text-left">
+          <dl className="grid grid-cols-3 gap-3 max-w-md mx-auto lg:mx-0 text-center lg:text-left">
             {[
               ["Days", "7 a week"],
               ["Trips", "AM & PM"],
@@ -82,10 +89,9 @@ export default function CTA() {
             ))}
           </dl>
 
-        </div>
-
-        <div className="min-w-0 lg:col-span-7 reveal" style={{ ["--reveal-delay" as string]: "150ms" }}>
-          <BookingPlanner />
+          <div className="max-w-md mx-auto lg:mx-0">
+            <TideStrip tides={tides} />
+          </div>
         </div>
       </div>
     </section>

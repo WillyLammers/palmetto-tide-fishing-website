@@ -29,12 +29,12 @@ export default async function Home() {
           and how do I book. */}
       <main id="main">
         <Hero aggregateRating={aggregateRating} totalReviewCount={totalReviewCount} />
-        <Trips tides={tides} />
+        <Trips />
         <About aggregateRating={aggregateRating} />
         <Testimonials reviews={reviews} aggregateRating={aggregateRating} totalReviewCount={totalReviewCount} />
         <Gallery />
         <FAQ />
-        <CTA />
+        <CTA tides={tides} />
       </main>
       <Footer />
       <MobileCallBar />

@@ -76,18 +76,18 @@ export const trips: Trip[] = [
     price: 350,
     tagline: "Dig fossil shark teeth on tide-bared sandbars. Everything you find, you keep.",
     includes: ["Up to 6 guests", "Perfect for kids", "Scheduled around the tides"],
-    // A real fossil tooth from the Chandler Bridge Formation outside
-    // Charleston, licensed from Wikimedia Commons. Not from one of Joseph's
-    // trips, so the alt text does not claim it is; swap in his own photo of a
-    // day's finds when he has one, and drop photoCredit.
-    photo: "/images/trips/shark-tooth-chandler-bridge-sc.jpg",
-    photoPosition: "56% 50%",
-    alt: "Fossil shark tooth from South Carolina's Chandler Bridge Formation, held between two fingers",
+    // A real beach haul of fossil shark teeth (a megalodon tooth plus a
+    // handful of smaller ones) over the sand, licensed from Flickr. It is not
+    // from one of Joseph's trips, so the alt text does not claim it is; swap in
+    // his own photo of a day's finds when he has one, and drop photoCredit.
+    photo: "/images/trips/shark-teeth-beach-haul.jpg",
+    photoPosition: "15% 40%",
+    alt: "A handful of fossil shark teeth, including a large megalodon tooth, held over the sand where they were found",
     photoCredit: {
-      author: "Mason Hintermeister",
-      source: "https://commons.wikimedia.org/wiki/File:Trigonotodus_alteri_lateral_tooth_(Oligocene,_Chandler_Bridge_FM,_SC).jpg",
-      license: "CC BY-SA 4.0",
-      licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+      author: "Virginia State Parks staff",
+      source: "https://www.flickr.com/photos/37922399@N05/36909053740",
+      license: "CC BY 2.0",
+      licenseUrl: "https://creativecommons.org/licenses/by/2.0/",
     },
     schemaName: "Charleston Shark Tooth Hunting Trip",
     schemaDescription:

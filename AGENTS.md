@@ -56,5 +56,8 @@ of `gallery.ts`. View the photos and add a species tag only where certain.
 - Gallery thumbnails mount in batches with plain `<img>` from
   `getImageProps`; rendering 100+ `next/image` components cost ~500ms of
   main-thread time on a phone.
+- Buttons come from `btn()` in `src/components/ui.ts` (one radius, three
+  heights, five colourways; gold only for the main action). Do not hand-roll
+  button classes, and no animated or gradient text.
 - Check before shipping: `npx tsc --noEmit`, `npm run lint`, `npm run build`,
   and look at it at 360px, 390px, 820px and 1440px wide.

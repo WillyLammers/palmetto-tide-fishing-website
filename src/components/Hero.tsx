@@ -1,81 +1,99 @@
-"use client";
-
 import Image from "next/image";
-import Link from "next/link";
+import HeroVideo from "./HeroVideo";
+import { Stars } from "./icons";
 
-export default function Hero() {
+export default function Hero({
+  aggregateRating = null,
+  totalReviewCount = null,
+}: {
+  aggregateRating?: number | null;
+  totalReviewCount?: number | null;
+}) {
   return (
-    <section id="home" className="relative h-screen w-full overflow-hidden">
-      {/* Background — image sits behind video as fallback */}
+    // svh, not vh: on iPhone 100vh is the height with Safari's toolbar hidden,
+    // which pushed the buttons under the toolbar on first load.
+    <section id="home" className="relative min-h-[100svh] w-full overflow-hidden bg-navy">
       <div className="absolute inset-0 animate-slow-zoom">
         <Image
           src="/images/hero/hero.png"
-          alt="Charleston, SC inshore fishing charter at sunset with Palmetto Tide Charters"
+          alt="Redfish held over the water on a Charleston inshore fishing charter"
           fill
-          priority
+          preload
+          sizes="100vw"
           className="object-cover"
         />
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        >
-          {/* Versioned filename: /videos/* is served immutable for a year, so a
-              changed file needs a changed path to actually reach cached clients. */}
-          <source src="/videos/hero-720.mp4" type="video/mp4" />
-        </video>
+        <HeroVideo />
       </div>
 
-      {/* Overlay — heavier on left where text lives, lighter right so sky breathes */}
-      <div className="absolute inset-0 bg-gradient-to-r from-navy/80 via-navy/40 to-navy/10" />
-      <div className="absolute inset-0 bg-gradient-to-t from-navy/70 via-transparent to-navy/20" />
+      {/* Heavier on the left and bottom where the text sits. */}
+      <div className="absolute inset-0 bg-gradient-to-r from-navy/85 via-navy/45 to-navy/10" />
+      <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/10 to-navy/30" />
 
-      {/* Content — lower-left anchored */}
-      <div className="relative z-10 h-full flex flex-col justify-end px-8 md:px-16 lg:px-24 pb-28 md:pb-36">
-        {/* Location label */}
-        <p className="font-heading text-white/40 text-xs tracking-[0.4em] uppercase mb-5 animate-fade-in-up">
-          Charleston, SC <span className="text-gold/70">·</span> Born &amp; Raised
+      <div className="relative z-10 min-h-[100svh] w-full max-w-7xl mx-auto flex flex-col justify-end px-6 sm:px-10 pt-32 pb-12 sm:pb-20 md:pb-28">
+        <p className="font-heading text-white/75 text-[11px] sm:text-xs tracking-[0.35em] uppercase mb-4 animate-fade-in-up">
+          Charleston, SC<span className="text-gold mx-2.5" aria-hidden="true">·</span>Born &amp; Raised
         </p>
 
-        {/* Headline */}
-        <h1 className="font-heading font-bold text-white uppercase leading-[0.92] mb-4 animate-fade-in-up [animation-delay:0.1s]"
-          style={{ fontSize: "clamp(3.5rem, 9vw, 7rem)" }}
+        <h1
+          className="font-heading font-bold text-white uppercase leading-[0.92] mb-3 animate-rise"
+          style={{ fontSize: "clamp(3.25rem, 9vw, 7rem)" }}
         >
           Palmetto Tide
+          <span
+            className="block font-heading font-medium text-shimmer tracking-[0.35em] mt-3"
+            style={{ fontSize: "clamp(1rem, 2.5vw, 1.75rem)" }}
+          >
+            Charters
+          </span>
         </h1>
 
-        {/* Subline */}
-        <p className="font-heading text-shimmer uppercase tracking-[0.35em] mb-6 animate-fade-in-up [animation-delay:0.2s]"
-          style={{ fontSize: "clamp(1rem, 2.5vw, 1.75rem)" }}
-        >
-          Charters
+        <p className="font-body text-white/85 text-base sm:text-lg md:text-xl mt-3 mb-8 animate-fade-in-up [animation-delay:0.2s] leading-relaxed max-w-md">
+          Private inshore fishing charters with Captain Joseph Christy. Redfish, trout, flounder and sharks. Inshore, every tide.
         </p>
 
-        {/* Tagline */}
-        <p className="font-body text-white/55 text-base md:text-lg mb-10 animate-fade-in-up [animation-delay:0.3s] leading-relaxed max-w-xs md:max-w-sm">
-          Inshore. Every tide.
-        </p>
-
-        {/* Single CTA */}
-        <div className="animate-fade-in-up [animation-delay:0.45s]">
-          <Link
+        <div className="flex flex-col min-[420px]:flex-row gap-3 animate-fade-in-up [animation-delay:0.3s]">
+          <a
             href="#contact"
-            className="inline-block px-10 py-4 bg-white text-navy font-heading text-[13px] tracking-[0.2em] uppercase hover:bg-gold transition-all duration-500 rounded shadow-2xl"
+            className="inline-flex items-center justify-center px-8 py-4 bg-gold text-navy font-heading text-[13px] tracking-[0.2em] uppercase hover:bg-gold-light transition-colors duration-300 rounded shadow-2xl"
           >
-            Book a Charter
-          </Link>
+            Book a Trip
+          </a>
+          <a
+            href="#trips"
+            className="inline-flex items-center justify-center px-8 py-4 border border-white/40 text-white font-heading text-[13px] tracking-[0.2em] uppercase hover:border-white hover:bg-white/10 transition-colors duration-300 rounded backdrop-blur-sm"
+          >
+            Trips &amp; Prices
+          </a>
         </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fade-in-up [animation-delay:1s]">
-          <p className="font-heading text-[10px] text-white/25 tracking-[0.3em] uppercase">
-            Scroll
-          </p>
-          <div className="w-[1px] h-8 bg-gradient-to-b from-white/30 to-transparent animate-bounce" />
-        </div>
+        <ul className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 font-body text-[13px] text-white/80 animate-fade-in-up [animation-delay:0.4s]">
+          <li className="flex items-center gap-2">
+            <Stars className="w-3.5 h-3.5" />
+            <span>
+              {aggregateRating && totalReviewCount
+                ? `${aggregateRating.toFixed(1)} on Google · ${totalReviewCount} reviews`
+                : "5-star rated on Google"}
+            </span>
+          </li>
+          <li className="flex items-center gap-2">
+            <span className="w-1 h-1 rounded-full bg-gold" aria-hidden="true" />
+            USCG licensed captain
+          </li>
+          <li className="flex items-center gap-2">
+            <span className="w-1 h-1 rounded-full bg-gold" aria-hidden="true" />
+            Up to 6 guests, all gear included
+          </li>
+        </ul>
       </div>
+
+      <a
+        href="#trips"
+        aria-label="Scroll to trips"
+        className="hidden md:flex absolute bottom-8 right-10 lg:right-16 z-10 flex-col items-center gap-2 text-white/50 hover:text-white transition-colors animate-fade-in-up [animation-delay:1s]"
+      >
+        <span className="font-heading text-[10px] tracking-[0.3em] uppercase [writing-mode:vertical-rl]">Scroll</span>
+        <span className="w-px h-10 bg-gradient-to-b from-white/50 to-transparent animate-bounce" />
+      </a>
     </section>
   );
 }

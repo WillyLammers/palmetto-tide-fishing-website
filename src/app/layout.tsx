@@ -1,23 +1,22 @@
 import type { Metadata, Viewport } from "next";
 import { Oswald, Lato } from "next/font/google";
 import "./globals.css";
+import { SITE_URL, BUSINESS_NAME as SITE_NAME, OG_IMAGE } from "@/data/site";
 
 const oswald = Oswald({
   variable: "--font-oswald",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "700"],
   display: "swap",
 });
 
 const lato = Lato({
   variable: "--font-lato",
   subsets: ["latin"],
-  weight: ["300", "400", "700"],
+  weight: ["400", "700"],
   display: "swap",
 });
 
-const SITE_URL = "https://www.palmettotidecharters.com";
-const SITE_NAME = "Palmetto Tide Charters";
 const DEFAULT_TITLE =
   "Palmetto Tide Charters | Charleston, SC Inshore Fishing Charters";
 const DEFAULT_DESCRIPTION =
@@ -98,11 +97,11 @@ export const metadata: Metadata = {
     description: DEFAULT_DESCRIPTION,
     images: [
       {
-        url: "/images/hero/og-image.png",
-        width: 1500,
-        height: 843,
-        alt: "Palmetto Tide Charters — Charleston SC inshore fishing with Captain Joseph Christy",
-        type: "image/png",
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "Palmetto Tide Charters: Charleston SC inshore fishing charters with Captain Joseph Christy",
+        type: "image/jpeg",
       },
     ],
   },
@@ -110,7 +109,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
-    images: ["/images/hero/og-image.png"],
+    images: [OG_IMAGE],
   },
   other: {
     "geo.region": "US-SC",
@@ -121,10 +120,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#0a2540" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a2540" },
-  ],
+  themeColor: "#04111d",
   width: "device-width",
   initialScale: 1,
   colorScheme: "light",

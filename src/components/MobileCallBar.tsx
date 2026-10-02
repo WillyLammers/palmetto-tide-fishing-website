@@ -1,20 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-const PHONE = "8434714767";
-const PHONE_DISPLAY = "(843) 471-4767";
+import { PHONE, PHONE_DISPLAY, smsHref } from "@/data/site";
+import { PhoneIcon, TextIcon } from "./icons";
 
 /**
  * Persistent call/text bar for mobile.
  *
- * Trips are booked by phone and text, but the header's "Book Now" is
- * desktop-only and the number otherwise appears for the first time about 80%
- * of the way down the page. This keeps booking one tap away from the moment a
- * visitor scrolls past the hero.
+ * Trips are booked by phone and text, so booking stays one tap away from the
+ * moment a visitor scrolls past the hero.
  *
- * Hidden on the hero (which has its own call to action) and while the contact
- * section is on screen, so it never doubles up on a CTA already in view.
+ * Hidden on the hero (which has its own call to action) and while the booking
+ * section is on screen, so it never doubles up on a CTA already in view, and
+ * hidden by CSS while the mobile menu is open (the menu has its own buttons).
  */
 export default function MobileCallBar() {
   const [show, setShow] = useState(false);
@@ -33,7 +31,7 @@ export default function MobileCallBar() {
         contactVisible = entry.isIntersecting;
         update();
       },
-      { threshold: 0.25 }
+      { threshold: 0.05 }
     );
     if (contact) observer.observe(contact);
 
@@ -54,7 +52,7 @@ export default function MobileCallBar() {
       // links out of the tab order while the bar is off screen. Without it a
       // keyboard user could focus buttons they cannot see, and aria-hidden
       // wrapping focusable elements is an ARIA violation.
-      className={`lg:hidden fixed inset-x-0 bottom-0 z-50 transition-[transform,visibility] duration-500 ease-out ${
+      className={`call-bar lg:hidden fixed inset-x-0 bottom-0 z-50 transition-[transform,visibility] duration-500 ease-out ${
         show ? "translate-y-0 visible" : "translate-y-full invisible pointer-events-none"
       }`}
     >
@@ -65,22 +63,24 @@ export default function MobileCallBar() {
         <a
           href={`tel:${PHONE}`}
           aria-label={`Call Palmetto Tide Charters at ${PHONE_DISPLAY}`}
-          className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-lg bg-gold text-navy font-heading text-[12px] tracking-[0.2em] uppercase active:brightness-95 transition"
+          className="flex-1 flex items-center justify-center gap-2 min-h-[50px] rounded-lg bg-gold text-navy font-heading text-[13px] tracking-[0.2em] uppercase active:brightness-95 transition"
         >
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.24.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z" />
-          </svg>
+          <PhoneIcon className="w-4 h-4" />
           Call
         </a>
         <a
-          href={`sms:${PHONE}`}
+          href={smsHref("Hi Captain Joseph, I'd like to book a fishing trip.")}
           aria-label={`Text Palmetto Tide Charters at ${PHONE_DISPLAY}`}
-          className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-lg border border-white/30 text-white font-heading text-[12px] tracking-[0.2em] uppercase active:bg-white/10 transition"
+          className="flex-1 flex items-center justify-center gap-2 min-h-[50px] rounded-lg border border-white/30 text-white font-heading text-[13px] tracking-[0.2em] uppercase active:bg-white/10 transition"
         >
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M20 2H4a2 2 0 00-2 2v18l4-4h14a2 2 0 002-2V4a2 2 0 00-2-2z" />
-          </svg>
+          <TextIcon className="w-4 h-4" />
           Text
+        </a>
+        <a
+          href="#contact"
+          className="flex-1 flex items-center justify-center min-h-[50px] rounded-lg bg-white text-navy font-heading text-[13px] tracking-[0.2em] uppercase active:brightness-95 transition"
+        >
+          Book
         </a>
       </div>
     </div>

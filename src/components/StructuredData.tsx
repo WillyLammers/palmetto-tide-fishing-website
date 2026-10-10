@@ -1,4 +1,4 @@
-import { trips } from "@/data/trips";
+import { priceTerms, trips, type Trip } from "@/data/trips";
 import { faqs } from "@/data/faq";
 import { galleryPhotos } from "@/data/gallery";
 import {
@@ -17,6 +17,10 @@ const HERO_IMAGE = `${SITE_URL}${OG_IMAGE}`;
 
 // Approximate Charleston Harbor coordinates — the charter departs Charleston.
 const GEO = { latitude: 32.7765, longitude: -79.9311 };
+
+// A per-person trip's terms ride along in its description, so the markup
+// never claims the base price covers a group of six.
+const describe = (t: Trip) => [t.schemaDescription, priceTerms(t)].filter(Boolean).join(" ");
 
 /**
  * No aggregateRating or review markup here, deliberately.
@@ -86,7 +90,6 @@ export default function StructuredData() {
           "Thursday",
           "Friday",
           "Saturday",
-          "Sunday",
         ],
         opens: "05:00",
         closes: "20:00",
@@ -118,7 +121,7 @@ export default function StructuredData() {
         "@type": "Offer",
         "@id": `${SITE_URL}/#${t.id}`,
         name: t.schemaName,
-        description: t.schemaDescription,
+        description: describe(t),
         price: String(t.price),
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
@@ -127,7 +130,7 @@ export default function StructuredData() {
           "@type": "Service",
           serviceType: "Fishing Charter",
           name: t.schemaName,
-          description: t.schemaDescription,
+          description: describe(t),
           image: `${SITE_URL}${t.photo}`,
           provider: { "@id": `${SITE_URL}/#business` },
           areaServed: {

@@ -1,13 +1,19 @@
 // Single source for every trip: the cards, the booking form and the schema.org
 // offers all read from here, so a price change is one edit, not three.
 
+/** Most guests on any one private charter. */
+export const MAX_GUESTS = 6;
+
 export type Trip = {
   id: string;
   title: string;
   duration: string;
   /** ISO 8601 duration for schema.org. */
   isoDuration: string;
+  /** Flat price for the whole group, unless perPerson is set. */
   price: number;
+  /** When the price covers only the first few people, and each one after that is extra. */
+  perPerson?: { included: number; extra: number };
   tagline: string;
   includes: string[];
   photo: string;
@@ -27,15 +33,16 @@ export const trips: Trip[] = [
     title: "Half Day Inshore",
     duration: "4 Hours",
     isoDuration: "PT4H",
-    price: 450,
+    price: 500,
+    perPerson: { included: 2, extra: 50 },
     tagline: "Redfish, trout & flounder on the Lowcountry flats.",
-    includes: ["Up to 6 anglers", "All tackle & live bait", "License covered"],
+    includes: ["All tackle & live bait", "License covered"],
     photo: "/images/gallery/fishing-92.jpg",
     photoPosition: "50% 62%",
     alt: "Two guests laughing as they hold up a redfish on a Charleston half-day inshore charter",
     schemaName: "Half Day Inshore Fishing Charter",
     schemaDescription:
-      "4-hour inshore fishing trip targeting redfish, speckled trout and flounder on the Charleston Lowcountry flats. Up to 6 anglers. All tackle, live bait and license included.",
+      "4-hour inshore fishing trip targeting redfish, speckled trout and flounder on the Charleston Lowcountry flats. All tackle, live bait and license included.",
   },
   {
     id: "full-day",
@@ -96,3 +103,20 @@ export const trips: Trip[] = [
 ];
 
 export const tripById = (id: string) => trips.find((t) => t.id === id);
+
+/** What the group pays for this many people. */
+export const tripTotal = (t: Trip, guests: number) =>
+  t.price + (t.perPerson ? Math.max(0, guests - t.perPerson.included) * t.perPerson.extra : 0);
+
+/** The few words under the headline price on a trip card. */
+export const priceBasis = (t: Trip) => (t.perPerson ? `for ${t.perPerson.included} people` : "for your group");
+
+/** The card checklist, led by the extra-person terms when a trip has them. */
+export const tripIncludes = (t: Trip) =>
+  t.perPerson ? [`Up to ${MAX_GUESTS} anglers, $${t.perPerson.extra} each extra`, ...t.includes] : t.includes;
+
+/** The full price terms in one sentence, or null for a flat-rate trip. */
+export const priceTerms = (t: Trip) =>
+  t.perPerson
+    ? `$${t.price} for up to ${t.perPerson.included} people, plus $${t.perPerson.extra} for each additional person, up to ${MAX_GUESTS}.`
+    : null;

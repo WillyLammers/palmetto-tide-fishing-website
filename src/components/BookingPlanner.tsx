@@ -1,21 +1,26 @@
 "use client";
 
 import { useEffect, useId, useMemo, useState } from "react";
-import { trips, tripById } from "@/data/trips";
+import { MAX_GUESTS, tripById, tripTotal, trips } from "@/data/trips";
 import { mailHref, smsHref } from "@/data/site";
 import { SELECT_TRIP_EVENT } from "./BookTripButton";
 import { MailIcon, TextIcon } from "./icons";
 import { btn } from "./ui";
-
-const MAX_GUESTS = 6;
 
 const localToday = () => {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 };
 
+// Noon, so no timezone can tip the date into the day before.
+const atNoon = (iso: string) => new Date(`${iso}T12:00:00`);
+
 const prettyDate = (iso: string) =>
-  new Date(`${iso}T12:00:00`).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
+  atNoon(iso).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
+
+// Captain Joseph keeps the Sabbath. A date input cannot grey out one weekday,
+// so a Sunday is caught here, before it becomes a text he has to turn down.
+const isSunday = (iso: string) => atNoon(iso).getDay() === 0;
 
 /**
  * Builds the booking text for the visitor.
@@ -49,10 +54,11 @@ export default function BookingPlanner() {
   }, []);
 
   const trip = tripById(tripId);
+  const sunday = date !== "" && isSunday(date);
 
   const message = useMemo(() => {
     const lines = ["Hi Captain Joseph, I'd like to book a trip with Palmetto Tide Charters.", ""];
-    lines.push(`Trip: ${trip ? `${trip.title} (${trip.duration.toLowerCase()}, $${trip.price})` : "Not sure yet, would love a recommendation"}`);
+    lines.push(`Trip: ${trip ? `${trip.title} (${trip.duration.toLowerCase()}, $${tripTotal(trip, guests)})` : "Not sure yet, would love a recommendation"}`);
     if (date) lines.push(`Date: ${prettyDate(date)}${flexible ? " (flexible)" : ""}`);
     else if (flexible) lines.push("Date: Flexible");
     lines.push(`Group: ${guests} ${guests === 1 ? "person" : "people"}`);
@@ -96,7 +102,7 @@ export default function BookingPlanner() {
                 />
                 <span className="block font-heading text-[14px] sm:text-[15px] uppercase tracking-wide leading-tight">{t.title}</span>
                 <span className={`block font-body text-xs mt-1 ${selected ? "text-white/70" : "text-slate-light"}`}>
-                  {t.duration} · ${t.price}
+                  {t.duration} · ${tripTotal(t, guests)}
                 </span>
               </label>
             );
@@ -130,8 +136,12 @@ export default function BookingPlanner() {
             value={date}
             min={minDate}
             onChange={(e) => setDate(e.target.value)}
-            className={`${field} min-h-[50px] appearance-none`}
+            aria-describedby={sunday ? `${uid}-sunday` : undefined}
+            className={`${field} min-h-[50px] appearance-none ${sunday ? "border-gold focus:border-gold" : ""}`}
           />
+          <p id={`${uid}-sunday`} className="font-body text-[13px] text-navy leading-snug" aria-live="polite">
+            {sunday && <span className="block mt-2">No trips on Sundays. Captain Joseph keeps the Sabbath, so please pick Monday to Saturday.</span>}
+          </p>
           <label className="mt-2.5 inline-flex items-center gap-2 font-body text-sm text-slate cursor-pointer">
             <input
               type="checkbox"
@@ -170,7 +180,11 @@ export default function BookingPlanner() {
               +
             </button>
           </div>
-          <p className="mt-2.5 font-body text-xs text-slate-light">Up to {MAX_GUESTS} per private charter</p>
+          <p className="mt-2.5 font-body text-xs text-slate-light">
+            {trip?.perPerson
+              ? `$${trip.price} for ${trip.perPerson.included}, +$${trip.perPerson.extra} each extra, up to ${MAX_GUESTS}`
+              : `Up to ${MAX_GUESTS} per private charter`}
+          </p>
         </div>
       </div>
 

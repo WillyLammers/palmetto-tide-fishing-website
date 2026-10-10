@@ -58,7 +58,10 @@ export default function BookingPlanner() {
 
   const message = useMemo(() => {
     const lines = ["Hi Captain Joseph, I'd like to book a trip with Palmetto Tide Charters.", ""];
-    lines.push(`Trip: ${trip ? `${trip.title} (${trip.duration.toLowerCase()}, $${tripTotal(trip, guests)})` : "Not sure yet, would love a recommendation"}`);
+    const total = trip ? tripTotal(trip, guests) : null;
+    lines.push(
+      `Trip: ${trip ? `${trip.title} (${trip.duration.toLowerCase()}${total == null ? "" : `, $${total}`})` : "Not sure yet, would love a recommendation"}`,
+    );
     if (date) lines.push(`Date: ${prettyDate(date)}${flexible ? " (flexible)" : ""}`);
     else if (flexible) lines.push("Date: Flexible");
     lines.push(`Group: ${guests} ${guests === 1 ? "person" : "people"}`);
@@ -83,12 +86,15 @@ export default function BookingPlanner() {
       <fieldset className="mb-6">
         <legend className={label}>Trip</legend>
         <div className="grid grid-cols-2 gap-2.5">
-          {trips.map((t) => {
+          {trips.map((t, i) => {
             const selected = tripId === t.id;
+            const total = tripTotal(t, guests);
+            // An odd last tile takes the whole row rather than sitting beside a gap.
+            const lone = i === trips.length - 1 && trips.length % 2 === 1;
             return (
               <label
                 key={t.id}
-                className={`relative cursor-pointer rounded-xl border px-3.5 py-3 transition-all has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-gold ${
+                className={`relative cursor-pointer rounded-xl ${lone ? "col-span-2" : ""} border px-3.5 py-3 transition-all has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-gold ${
                   selected ? "border-navy bg-navy text-white shadow-md" : "border-navy/15 hover:border-navy/40 text-navy"
                 }`}
               >
@@ -102,7 +108,7 @@ export default function BookingPlanner() {
                 />
                 <span className="block font-heading text-[14px] sm:text-[15px] uppercase tracking-wide leading-tight">{t.title}</span>
                 <span className={`block font-body text-xs mt-1 ${selected ? "text-white/70" : "text-slate-light"}`}>
-                  {t.duration} · ${tripTotal(t, guests)}
+                  {t.duration} · {total == null ? "Ask for pricing" : `$${total}`}
                 </span>
               </label>
             );

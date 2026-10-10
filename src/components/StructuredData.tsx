@@ -22,6 +22,9 @@ const GEO = { latitude: 32.7765, longitude: -79.9311 };
 // never claims the base price covers a group of six.
 const describe = (t: Trip) => [t.schemaDescription, priceTerms(t)].filter(Boolean).join(" ");
 
+// A trip priced on request carries no price, rather than a made-up one.
+const priceFields = (t: Trip) => (t.price == null ? {} : { price: String(t.price), priceCurrency: "USD" });
+
 /**
  * No aggregateRating or review markup here, deliberately.
  *
@@ -112,6 +115,7 @@ export default function StructuredData() {
       "Cobia",
       "Shark fishing",
       "Charleston Harbor",
+      "Charleston Harbor cruises",
       "Lowcountry tides",
     ],
     hasOfferCatalog: {
@@ -122,13 +126,12 @@ export default function StructuredData() {
         "@id": `${SITE_URL}/#${t.id}`,
         name: t.schemaName,
         description: describe(t),
-        price: String(t.price),
-        priceCurrency: "USD",
+        ...priceFields(t),
         availability: "https://schema.org/InStock",
         url: `${SITE_URL}/#trips`,
         itemOffered: {
           "@type": "Service",
-          serviceType: "Fishing Charter",
+          serviceType: t.serviceType ?? "Fishing Charter",
           name: t.schemaName,
           description: describe(t),
           image: `${SITE_URL}${t.photo}`,
@@ -143,8 +146,7 @@ export default function StructuredData() {
     makesOffer: trips.map((t) => ({
       "@type": "Offer",
       name: t.schemaName,
-      price: String(t.price),
-      priceCurrency: "USD",
+      ...priceFields(t),
     })),
     slogan: "Inshore. Every tide.",
   };

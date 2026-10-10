@@ -12,13 +12,17 @@ import {
 } from "@/data/site";
 
 const links = [
-  { href: "#trips", label: "Trips & Prices" },
+  { href: "#trips", label: "Fishing Charters" },
+  { href: "#cruises", label: "Cruises & Outings" },
   { href: "#about", label: "Your Captain" },
   { href: "#reviews", label: "Reviews" },
   { href: "#gallery", label: "Gallery" },
   { href: "#faq", label: "FAQ" },
   { href: "#contact", label: "Book a Trip" },
 ];
+
+// Trips whose card photo is licensed rather than Joseph's own.
+const credited = trips.filter((t) => t.photoCredit);
 
 export default function Footer() {
   return (
@@ -31,8 +35,8 @@ export default function Footer() {
             <p className="font-heading text-xl font-bold text-white tracking-[0.2em] uppercase leading-none">Palmetto Tide</p>
             <p className="font-heading text-[10px] text-gold tracking-[0.4em] uppercase mt-1.5 mb-6">Fishing Charters</p>
             <p className="font-body text-white/65 text-sm leading-[1.8] max-w-xs">
-              Inshore charters out of Charleston, South Carolina. Redfish, trout, flounder and sharks, from the creeks
-              behind Mount Pleasant to the barrier-island flats.
+              Private fishing charters and harbor cruises out of Charleston, South Carolina, from the creeks behind
+              Mount Pleasant to the barrier-island flats.
             </p>
           </div>
 
@@ -111,21 +115,26 @@ export default function Footer() {
           <p className="font-body text-white/50 text-xs tracking-wider">USCG licensed · Charleston, SC</p>
         </div>
 
-        {/* Attribution the photo licences require. */}
-        {trips
-          .filter((t) => t.photoCredit)
-          .map((t) => (
-            <p key={t.id} className="mt-4 font-body text-white/40 text-[11px] text-center md:text-left">
-              {t.title} photo:{" "}
-              <a href={t.photoCredit!.source} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-white/70">
-                {t.photoCredit!.author}
-              </a>
-              , cropped,{" "}
-              <a href={t.photoCredit!.licenseUrl} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-white/70">
-                {t.photoCredit!.license}
-              </a>
-            </p>
-          ))}
+        {/* Attribution the photo licences require, as one line rather than one
+            per photo. 60% white is the faintest that still meets 4.5:1 here. */}
+        {credited.length > 0 && (
+          <p className="mt-4 font-body text-white/60 text-[11px] leading-relaxed text-center md:text-left">
+            Trip photos, cropped:{" "}
+            {credited.map((t, i) => (
+              <span key={t.id}>
+                {i > 0 && " · "}
+                {t.title} by{" "}
+                <a href={t.photoCredit!.source} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-white">
+                  {t.photoCredit!.author}
+                </a>
+                ,{" "}
+                <a href={t.photoCredit!.licenseUrl} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-white">
+                  {t.photoCredit!.license}
+                </a>
+              </span>
+            ))}
+          </p>
+        )}
       </div>
     </footer>
   );

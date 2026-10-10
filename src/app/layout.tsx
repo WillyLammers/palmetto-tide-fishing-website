@@ -18,9 +18,9 @@ const lato = Lato({
 });
 
 const DEFAULT_TITLE =
-  "Palmetto Tide Charters | Charleston, SC Inshore Fishing Charters";
+  "Palmetto Tide Charters | Charleston Fishing Charters & Harbor Cruises";
 const DEFAULT_DESCRIPTION =
-  "Top-rated Charleston, SC inshore fishing charters with Captain Joseph Christy. Redfish, trout & flounder on the Lowcountry flats, plus shark fishing & shark tooth hunting trips. Book your Charleston fishing trip today.";
+  "Private Charleston, SC fishing charters and harbor cruises with Captain Joseph Christy. Inshore redfish, trout & flounder, shark fishing and shark tooth hunting, plus sunset cruises, dolphin tours, sandbar days and history cruises past Fort Sumter.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -58,6 +58,15 @@ export const metadata: Metadata = {
     "saltwater fishing Charleston SC",
     "family fishing trips Charleston",
     "private fishing charters Charleston",
+    "Charleston harbor cruise",
+    "Charleston sunset cruise",
+    "Charleston dolphin tour",
+    "Charleston eco tour",
+    "Fort Sumter boat tour",
+    "Charleston history cruise",
+    "Charleston sandbar boat trip",
+    "Charleston bachelorette boat",
+    "private boat charter Charleston",
     "best fishing guide Charleston",
     "book Charleston fishing trip",
     "Charleston native fishing guide",

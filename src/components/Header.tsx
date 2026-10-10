@@ -8,7 +8,8 @@ import { lockScroll } from "@/lib/scrollLock";
 import { btn } from "./ui";
 
 const navLinks = [
-  { href: "#trips", label: "Trips" },
+  { href: "#trips", label: "Fishing" },
+  { href: "#cruises", label: "Cruises" },
   { href: "#about", label: "Captain" },
   { href: "#reviews", label: "Reviews" },
   { href: "#gallery", label: "Gallery" },
@@ -175,13 +176,15 @@ export default function Header() {
           open ? "opacity-100 visible transition-opacity" : "opacity-0 invisible transition-[opacity,visibility]"
         }`}
       >
-        <nav aria-label="Mobile" className="flex-1 flex flex-col justify-center gap-1 overflow-y-auto">
-          {[{ href: "#home", label: "Home" }, ...navLinks].map((link, i) => (
+        {/* No "Home": the logo already goes back to the top. Safe centring, so a
+            short phone scrolls the list instead of clipping its first link. */}
+        <nav aria-label="Mobile" className="flex-1 min-h-0 flex flex-col [justify-content:safe_center] gap-1 overflow-y-auto">
+          {navLinks.map((link, i) => (
             <a
               key={link.href}
               href={link.href}
               onClick={close}
-              className={`font-heading text-[32px] leading-tight text-white uppercase tracking-[0.08em] py-2 transition-[opacity,transform] duration-500 ${
+              className={`font-heading text-[26px] [@media(min-height:740px)]:text-[32px] leading-tight text-white uppercase tracking-[0.08em] py-1.5 [@media(min-height:740px)]:py-2 transition-[opacity,transform] duration-500 ${
                 open ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
               }`}
               style={{ transitionDelay: open ? `${80 + i * 45}ms` : "0ms" }}
@@ -207,7 +210,7 @@ export default function Header() {
               <PhoneIcon className="w-4 h-4" /> Call
             </a>
             <a
-              href={smsHref("Hi Captain Joseph, I'd like to book a fishing trip.")}
+              href={smsHref("Hi Captain Joseph, I'd like to book a trip.")}
               className={btn({ variant: "outlineLight", size: "lg" })}
             >
               <TextIcon className="w-4 h-4" /> Text

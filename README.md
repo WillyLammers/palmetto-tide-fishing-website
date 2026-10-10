@@ -14,7 +14,7 @@ npm run lint
 ```
 
 - Contact details and links: `src/data/site.ts`
-- Trips and prices: `src/data/trips.ts`
+- Trips, cruises, prices and the "Great for" occasions: `src/data/trips.ts`
 - FAQ: `src/data/faq.ts`
 - Gallery order: `src/data/gallery.ts`
 - Add new photos: `python3 scripts/add-photos.py <files>` (see `AGENTS.md`)

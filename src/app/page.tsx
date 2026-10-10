@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Trips from "@/components/Trips";
+import Cruises from "@/components/Cruises";
 import Testimonials from "@/components/Testimonials";
 import Gallery from "@/components/Gallery";
 import FAQ from "@/components/FAQ";
@@ -25,11 +26,12 @@ export default async function Home() {
       <StructuredData />
       <Header />
       {/* Order follows the questions a visitor asks: what is it, what does it
-          cost, who runs it, is it good, what does it look like, the details,
+          cost (fishing first, then cruises for those not here to fish), who runs it, is it good, what does it look like, the details,
           and how do I book. */}
       <main id="main">
         <Hero aggregateRating={aggregateRating} totalReviewCount={totalReviewCount} />
         <Trips />
+        <Cruises />
         <About aggregateRating={aggregateRating} />
         <Testimonials reviews={reviews} aggregateRating={aggregateRating} totalReviewCount={totalReviewCount} />
         <Gallery />

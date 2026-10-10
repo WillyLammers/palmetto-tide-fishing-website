@@ -1,12 +1,21 @@
 // Single source for every trip: the cards, the booking form and the schema.org
 // offers all read from here, so a price change is one edit, not three.
+//
+// Trips come in two kinds, and each gets its own section of the page: fishing
+// charters, and cruises & outings for people who came for the water rather than
+// the fish. A cruise with no price set shows "Call for pricing" everywhere,
+// never an invented number.
 
 /** Most guests on any one private charter. */
 export const MAX_GUESTS = 6;
 
+export type TripKind = "fishing" | "cruise";
+
 export type Trip = {
   id: string;
+  kind: TripKind;
   title: string;
+  /** The short label on the photo: a length for fishing, the when or where for a cruise. */
   duration: string;
   /** ISO 8601 duration for schema.org. */
   isoDuration?: string;
@@ -23,10 +32,6 @@ export type Trip = {
   /** Required for any photo that is not Joseph's own; shown in the footer. */
   photoCredit?: { author: string; source: string; license: string; licenseUrl: string };
   featured?: boolean;
-  /** Spans the whole row under the fishing trips instead of taking one column. */
-  wide?: boolean;
-  /** schema.org serviceType; every trip but the cruise is a fishing charter. */
-  serviceType?: string;
   schemaName: string;
   schemaDescription: string;
 };
@@ -34,6 +39,7 @@ export type Trip = {
 export const trips: Trip[] = [
   {
     id: "half-day",
+    kind: "fishing",
     title: "Half Day Inshore",
     duration: "4 Hours",
     isoDuration: "PT4H",
@@ -50,6 +56,7 @@ export const trips: Trip[] = [
   },
   {
     id: "full-day",
+    kind: "fishing",
     title: "Full Day Inshore",
     duration: "6 Hours",
     isoDuration: "PT6H",
@@ -66,6 +73,7 @@ export const trips: Trip[] = [
   },
   {
     id: "shark-fishing",
+    kind: "fishing",
     title: "Shark Fishing",
     duration: "2 Hours",
     isoDuration: "PT2H",
@@ -81,6 +89,7 @@ export const trips: Trip[] = [
   },
   {
     id: "shark-tooth-hunting",
+    kind: "fishing",
     title: "Shark Tooth Hunting",
     duration: "2 Hours",
     isoDuration: "PT2H",
@@ -106,24 +115,108 @@ export const trips: Trip[] = [
   },
   {
     id: "harbor-cruise",
+    kind: "cruise",
     title: "Harbor Cruise",
     duration: "Day or Sunset",
-    // No price yet: the card says "Call for pricing" until Joseph sets one.
     tagline: "Spend the day or evening getting sunburnt and chasing the sunset falling behind the Charleston steeples.",
     includes: ["Up to 6 guests", "Just your group on the boat", "Bridge & steeple views"],
     photo: "/images/gallery/fishing-10.jpg",
     // x only matters in the narrow phone strip: it keeps the sun and a bridge tower in frame.
     photoPosition: "85% 72%",
     alt: "Friends wrapped in blankets on the bow at sunset, with the Ravenel Bridge behind them in Charleston Harbor",
-    wide: true,
-    serviceType: "Harbor Cruise",
-    schemaName: "Charleston Harbor Cruise",
+    schemaName: "Charleston Harbor & Sunset Cruise",
     schemaDescription:
       "Private cruise around Charleston Harbor by day or at sunset, with views of the Ravenel Bridge and the downtown steeples. Up to 6 guests.",
+  },
+  {
+    id: "sandbar-day",
+    kind: "cruise",
+    title: "Sandbar Day",
+    duration: "Low Tide",
+    tagline: "Anchor up on a sandbar when the tide drops, then swim, wade and soak up the sun with your crew.",
+    includes: ["Up to 6 guests", "Made for groups & celebrations", "Scheduled around the tides"],
+    // Licensed, and from Florida rather than one of Joseph's trips, so the alt
+    // text names no place. Swap in his own sandbar photo when he has one.
+    photo: "/images/trips/sandbar-low-tide.jpg",
+    photoPosition: "50% 50%",
+    alt: "Two friends with paddleboards on a sandbar at low tide, with the salt marsh behind them",
+    photoCredit: {
+      author: "pburka",
+      source: "https://www.flickr.com/photos/30047235@N03/54419502447",
+      license: "CC BY-SA 2.0",
+      licenseUrl: "https://creativecommons.org/licenses/by-sa/2.0/",
+    },
+    schemaName: "Charleston Sandbar Boat Trip",
+    schemaDescription:
+      "Private boat trip to a Lowcountry sandbar near Charleston, timed for low tide, for swimming, wading and time in the sun. Up to 6 guests.",
+  },
+  {
+    id: "dolphin-eco-tour",
+    kind: "cruise",
+    title: "Dolphin & Eco Tour",
+    duration: "Marsh & Creeks",
+    tagline: "Bottlenose dolphins, pelicans and the salt marsh up close, in the tidal creeks around Charleston.",
+    includes: ["Up to 6 guests", "Great for kids & families", "Wildlife of the Lowcountry"],
+    photo: "/images/trips/dolphins-morris-island-light.jpg",
+    // y keeps the lighthouse and both fins in the 4:3 crop; x keeps both fins
+    // in the narrow phone strip.
+    photoPosition: "40% 30%",
+    alt: "Two dolphin fins breaking the water in front of the Morris Island Lighthouse near Charleston",
+    photoCredit: {
+      author: "harryalverson",
+      source: "https://www.flickr.com/photos/72918555@N00/7377454516",
+      license: "CC BY-SA 2.0",
+      licenseUrl: "https://creativecommons.org/licenses/by-sa/2.0/",
+    },
+    schemaName: "Charleston Dolphin & Eco Tour",
+    schemaDescription:
+      "Private dolphin watching and eco tour through the tidal creeks and salt marsh around Charleston. Bottlenose dolphins, shorebirds and Lowcountry wildlife. Up to 6 guests.",
+  },
+  {
+    id: "history-cruise",
+    kind: "cruise",
+    title: "History Cruise",
+    duration: "Fort Sumter",
+    tagline: "Fort Sumter, the Battery and three and a half centuries of Charleston, seen from the water with a captain born and raised here.",
+    includes: ["Up to 6 guests", "Fort Sumter & the Battery", "Charleston stories from a local"],
+    photo: "/images/trips/fort-sumter-aerial.jpg",
+    // Wide photo: 60% keeps the fort and its pier in the card and centres the
+    // fort in the narrow phone strip.
+    photoPosition: "60% 50%",
+    alt: "Fort Sumter from the air, on its island at the mouth of Charleston Harbor",
+    photoCredit: {
+      author: "Methaz",
+      source: "https://commons.wikimedia.org/w/index.php?curid=27848330",
+      license: "CC BY-SA 3.0",
+      licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
+    },
+    schemaName: "Charleston Harbor History Cruise",
+    schemaDescription:
+      "Private history cruise of Charleston Harbor past Fort Sumter, the Battery and the historic waterfront, with a Charleston-born captain. Up to 6 guests.",
   },
 ];
 
 export const tripById = (id: string) => trips.find((t) => t.id === id);
+
+export const tripsOfKind = (kind: TripKind) => trips.filter((t) => t.kind === kind);
+
+export const kindLabels: Record<TripKind, string> = {
+  fishing: "Fishing Charters",
+  cruise: "Cruises & Outings",
+};
+
+/**
+ * What people book a cruise for. Tapping one adds its note to the booking
+ * text, so Joseph knows what the group is celebrating before he replies.
+ */
+export const occasions = [
+  { label: "Bachelorette parties", note: "We're planning a bachelorette party." },
+  { label: "Birthdays", note: "We're celebrating a birthday." },
+  { label: "Family trips", note: "It's a family trip." },
+  { label: "Anniversaries", note: "We're celebrating an anniversary." },
+  { label: "Proposals", note: "I'm planning a proposal." },
+  { label: "Friends in town", note: "We have friends visiting from out of town." },
+];
 
 /** What the group pays for this many people, or null when the price is on request. */
 export const tripTotal = (t: Trip, guests: number) =>

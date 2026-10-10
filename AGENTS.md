@@ -14,7 +14,10 @@ decision serves "get them to call or text."
 
 - `src/data/site.ts` is the only place the phone number, email and outbound
   links are written. `src/data/trips.ts` drives the trip cards, the booking
-  planner AND the schema.org offers: a price change is one edit.
+  planner AND the schema.org offers: a price change is one edit. Each trip is
+  `kind: "fishing"` or `"cruise"`, and each kind is its own section (Trips.tsx,
+  Cruises.tsx) sharing one TripCard. A trip with no `price` reads "Call for
+  pricing" everywhere; never fill one in that Joseph has not given.
 - `src/data/faq.ts` renders the visible FAQ and the FAQPage markup. Google
   requires structured data to match visible content; keep them one list.
 - `src/data/gallery.ts` is the photo gallery in display order, newest first.

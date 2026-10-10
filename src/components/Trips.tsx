@@ -16,30 +16,41 @@ export default function Trips() {
               Trips &amp; Prices
             </h2>
             <p className="font-body text-slate text-[15px] leading-relaxed max-w-md lg:max-w-sm lg:text-right">
-              Private charters out of Charleston, Monday through Saturday. Rods, tackle and bait included on every trip.
+              Private charters out of Charleston, Monday through Saturday. Rods, tackle and bait included on every fishing trip.
             </p>
           </div>
         </div>
 
-        {/* Phones: one row per trip, photo beside the details, so all four can be
-            compared at a glance without a carousel hiding half of them.
-            Tablet: 2 up. Desktop: 4 up. */}
+        {/* Phones: one row per trip, photo beside the details, so every trip can
+            be compared at a glance without a carousel hiding half of them.
+            Tablet: 2 up. Desktop: 4 up. A wide trip (the cruise) takes a whole
+            row of its own underneath, so five trips never leave one orphaned. */}
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           {trips.map((trip, i) => (
             <li
               key={trip.id}
               id={`trip-${trip.id}`}
-              className={`reveal group flex flex-row sm:flex-col rounded-2xl overflow-hidden bg-white transition-shadow duration-300 hover:shadow-xl ${
+              className={`reveal group flex flex-row rounded-2xl overflow-hidden bg-white transition-shadow duration-300 hover:shadow-xl ${
+                trip.wide ? "sm:col-span-2 lg:col-span-4" : "sm:flex-col"
+              } ${
                 trip.featured ? "ring-2 ring-gold/70 shadow-lg shadow-gold/10" : "ring-1 ring-black/[0.07] shadow-md shadow-black/5"
               }`}
               style={{ ["--reveal-delay" as string]: `${i * 90}ms` }}
             >
-              <div className="relative w-[36%] shrink-0 sm:w-full sm:aspect-[4/3] overflow-hidden bg-navy/10">
+              <div
+                className={`relative w-[36%] shrink-0 overflow-hidden bg-navy/10 ${
+                  trip.wide ? "sm:w-1/2 sm:min-h-[18rem]" : "sm:w-full sm:aspect-[4/3]"
+                }`}
+              >
                 <Image
                   src={trip.photo}
                   alt={trip.alt}
                   fill
-                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 36vw"
+                  sizes={
+                    trip.wide
+                      ? "(min-width: 1280px) 600px, (min-width: 640px) 50vw, 36vw"
+                      : "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 36vw"
+                  }
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                   style={{ objectPosition: trip.photoPosition }}
                 />
@@ -53,14 +64,16 @@ export default function Trips() {
                 </span>
               </div>
 
-              <div className="flex flex-col flex-1 min-w-0 p-4 sm:p-6">
+              <div className={`flex flex-col flex-1 min-w-0 p-4 ${trip.wide ? "sm:p-8 lg:px-12 sm:justify-center" : "sm:p-6"}`}>
                 <p className="sm:hidden font-heading text-[11px] tracking-[0.2em] uppercase text-ocean mb-1">{trip.duration}</p>
-                <h3 className="font-heading text-lg sm:text-xl font-bold text-navy uppercase tracking-wide leading-tight mb-1.5 sm:mb-2">
+                <h3 className={`font-heading text-lg sm:text-xl ${trip.wide ? "lg:text-2xl" : ""} font-bold text-navy uppercase tracking-wide leading-tight mb-1.5 sm:mb-2`}>
                   {trip.title}
                 </h3>
-                <p className="font-body text-slate text-[13.5px] sm:text-sm leading-relaxed mb-3 sm:mb-5">{trip.tagline}</p>
+                <p className={`font-body text-slate text-[13.5px] sm:text-sm leading-relaxed mb-3 sm:mb-5 ${trip.wide ? "lg:text-base lg:max-w-md" : ""}`}>
+                  {trip.tagline}
+                </p>
 
-                <ul className="hidden sm:block space-y-2 mb-6 flex-1">
+                <ul className={`hidden sm:block space-y-2 mb-6 ${trip.wide ? "" : "flex-1"}`}>
                   {tripIncludes(trip).map((item) => (
                     <li key={item} className="flex items-start gap-2.5 font-body text-sm text-slate">
                       <CheckIcon className="w-3.5 h-3.5 mt-[3px] text-ocean shrink-0" />
@@ -74,8 +87,15 @@ export default function Trips() {
 
                 <div className="flex items-center justify-between gap-3 pt-3 sm:pt-5 border-t border-black/[0.07]">
                   <p className="leading-none">
-                    <span className="font-body text-slate text-sm align-top">$</span>
-                    <span className="font-heading text-[1.75rem] sm:text-3xl font-bold text-navy">{trip.price}</span>
+                    {/* Priced on request: a word in the price's place, never an invented number. */}
+                    {trip.price == null ? (
+                      <span className="font-heading text-[1.75rem] sm:text-3xl font-bold text-navy uppercase">Call</span>
+                    ) : (
+                      <>
+                        <span className="font-body text-slate text-sm align-top">$</span>
+                        <span className="font-heading text-[1.75rem] sm:text-3xl font-bold text-navy">{trip.price}</span>
+                      </>
+                    )}
                     <span className="block font-body text-[10.5px] text-slate-light tracking-wider uppercase mt-1 whitespace-nowrap">{priceBasis(trip)}</span>
                   </p>
                   <BookTripButton

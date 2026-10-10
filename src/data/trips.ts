@@ -9,9 +9,9 @@ export type Trip = {
   title: string;
   duration: string;
   /** ISO 8601 duration for schema.org. */
-  isoDuration: string;
-  /** Flat price for the whole group, unless perPerson is set. */
-  price: number;
+  isoDuration?: string;
+  /** Flat price for the whole group, unless perPerson is set. Omitted when Joseph quotes it on request. */
+  price?: number;
   /** When the price covers only the first few people, and each one after that is extra. */
   perPerson?: { included: number; extra: number };
   tagline: string;
@@ -23,6 +23,10 @@ export type Trip = {
   /** Required for any photo that is not Joseph's own; shown in the footer. */
   photoCredit?: { author: string; source: string; license: string; licenseUrl: string };
   featured?: boolean;
+  /** Spans the whole row under the fishing trips instead of taking one column. */
+  wide?: boolean;
+  /** schema.org serviceType; every trip but the cruise is a fishing charter. */
+  serviceType?: string;
   schemaName: string;
   schemaDescription: string;
 };
@@ -100,16 +104,34 @@ export const trips: Trip[] = [
     schemaDescription:
       "2-hour shark tooth hunting trip scheduled around low tide. Hunt fossilized shark teeth, including megalodon, on Charleston's tide-bared sandbars and banks. Perfect for kids and families. Up to 6 guests. Everything you find, you keep.",
   },
+  {
+    id: "harbor-cruise",
+    title: "Harbor Cruise",
+    duration: "Day or Sunset",
+    // No price yet: the card says "Call for pricing" until Joseph sets one.
+    tagline: "Spend the day or evening getting sunburnt and chasing the sunset falling behind the Charleston steeples.",
+    includes: ["Up to 6 guests", "Just your group on the boat", "Bridge & steeple views"],
+    photo: "/images/gallery/fishing-10.jpg",
+    // x only matters in the narrow phone strip: it keeps the sun and a bridge tower in frame.
+    photoPosition: "85% 72%",
+    alt: "Friends wrapped in blankets on the bow at sunset, with the Ravenel Bridge behind them in Charleston Harbor",
+    wide: true,
+    serviceType: "Harbor Cruise",
+    schemaName: "Charleston Harbor Cruise",
+    schemaDescription:
+      "Private cruise around Charleston Harbor by day or at sunset, with views of the Ravenel Bridge and the downtown steeples. Up to 6 guests.",
+  },
 ];
 
 export const tripById = (id: string) => trips.find((t) => t.id === id);
 
-/** What the group pays for this many people. */
+/** What the group pays for this many people, or null when the price is on request. */
 export const tripTotal = (t: Trip, guests: number) =>
-  t.price + (t.perPerson ? Math.max(0, guests - t.perPerson.included) * t.perPerson.extra : 0);
+  t.price == null ? null : t.price + (t.perPerson ? Math.max(0, guests - t.perPerson.included) * t.perPerson.extra : 0);
 
 /** The few words under the headline price on a trip card. */
-export const priceBasis = (t: Trip) => (t.perPerson ? `for ${t.perPerson.included} people` : "for your group");
+export const priceBasis = (t: Trip) =>
+  t.price == null ? "for pricing" : t.perPerson ? `for ${t.perPerson.included} people` : "for your group";
 
 /** The card checklist, led by the extra-person terms when a trip has them. */
 export const tripIncludes = (t: Trip) =>
@@ -117,6 +139,6 @@ export const tripIncludes = (t: Trip) =>
 
 /** The full price terms in one sentence, or null for a flat-rate trip. */
 export const priceTerms = (t: Trip) =>
-  t.perPerson
+  t.perPerson && t.price != null
     ? `$${t.price} for up to ${t.perPerson.included} people, plus $${t.perPerson.extra} for each additional person, up to ${MAX_GUESTS}.`
     : null;

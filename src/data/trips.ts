@@ -47,9 +47,9 @@ export const trips: Trip[] = [
   {
     id: "full-day",
     title: "Full Day Inshore",
-    duration: "8 Hours",
-    isoDuration: "PT8H",
-    price: 950,
+    duration: "6 Hours",
+    isoDuration: "PT6H",
+    price: 800,
     tagline: "All-day run through Charleston's best inshore spots.",
     includes: ["Up to 6 anglers", "All tackle & live bait", "Cooler with water & ice"],
     photo: "/images/gallery/fishing-93.jpg",
@@ -58,7 +58,7 @@ export const trips: Trip[] = [
     featured: true,
     schemaName: "Full Day Inshore Fishing Charter",
     schemaDescription:
-      "8-hour all-day inshore charter running Charleston Harbor and the surrounding barrier-island creeks. Up to 6 anglers. All tackle, live bait, cooler with water and ice included.",
+      "6-hour full-day inshore charter running Charleston Harbor and the surrounding barrier-island creeks. Up to 6 anglers. All tackle, live bait, cooler with water and ice included.",
   },
   {
     id: "shark-fishing",

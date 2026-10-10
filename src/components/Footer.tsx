@@ -68,7 +68,8 @@ export default function Footer() {
                 <CopyButton value={EMAIL} label="email address" />
               </li>
               <li className="font-body text-white/65 text-sm">Charleston, South Carolina</li>
-              <li className="font-body text-white/65 text-sm">7 days a week · AM &amp; PM trips</li>
+              <li className="font-body text-white/65 text-sm">Monday–Saturday · AM &amp; PM trips</li>
+              <li className="font-body text-white/65 text-sm">Closed Sundays for the Sabbath</li>
             </ul>
           </div>
 

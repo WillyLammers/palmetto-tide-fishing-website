@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { trips } from "@/data/trips";
+import { priceBasis, tripIncludes, trips } from "@/data/trips";
 import BookTripButton from "./BookTripButton";
 import HowItWorks from "./HowItWorks";
 import { CheckIcon } from "./icons";
@@ -16,7 +16,7 @@ export default function Trips() {
               Trips &amp; Prices
             </h2>
             <p className="font-body text-slate text-[15px] leading-relaxed max-w-md lg:max-w-sm lg:text-right">
-              Private charters out of Charleston. One price for your whole group, with rods, tackle and bait included.
+              Private charters out of Charleston, Monday through Saturday. Rods, tackle and bait included on every trip.
             </p>
           </div>
         </div>
@@ -61,7 +61,7 @@ export default function Trips() {
                 <p className="font-body text-slate text-[13.5px] sm:text-sm leading-relaxed mb-3 sm:mb-5">{trip.tagline}</p>
 
                 <ul className="hidden sm:block space-y-2 mb-6 flex-1">
-                  {trip.includes.map((item) => (
+                  {tripIncludes(trip).map((item) => (
                     <li key={item} className="flex items-start gap-2.5 font-body text-sm text-slate">
                       <CheckIcon className="w-3.5 h-3.5 mt-[3px] text-ocean shrink-0" />
                       {item}
@@ -69,14 +69,14 @@ export default function Trips() {
                   ))}
                 </ul>
                 <p className="sm:hidden font-body text-[12.5px] text-slate-light leading-snug mb-3 flex-1">
-                  {trip.includes.join(" · ")}
+                  {tripIncludes(trip).join(" · ")}
                 </p>
 
                 <div className="flex items-center justify-between gap-3 pt-3 sm:pt-5 border-t border-black/[0.07]">
                   <p className="leading-none">
                     <span className="font-body text-slate text-sm align-top">$</span>
                     <span className="font-heading text-[1.75rem] sm:text-3xl font-bold text-navy">{trip.price}</span>
-                    <span className="block font-body text-[10.5px] text-slate-light tracking-wider uppercase mt-1 whitespace-nowrap">for your group</span>
+                    <span className="block font-body text-[10.5px] text-slate-light tracking-wider uppercase mt-1 whitespace-nowrap">{priceBasis(trip)}</span>
                   </p>
                   <BookTripButton
                     tripId={trip.id}

@@ -75,7 +75,7 @@ export default function CTA({ tides = [] }: { tides?: Tide[] }) {
 
           <dl className="grid grid-cols-3 gap-3 max-w-md mx-auto lg:mx-0 text-center lg:text-left">
             {[
-              ["Days", "7 a week"],
+              ["Days", "Mon–Sat"],
               ["Trips", "AM & PM"],
               ["Departs", "Charleston"],
             ].map(([k, v]) => (

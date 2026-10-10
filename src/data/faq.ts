@@ -2,7 +2,15 @@
 // requires structured data to describe content a visitor can actually see, so
 // the two must never diverge: edit the answer here and both update.
 
+import { MAX_GUESTS, priceTerms, trips } from "./trips";
+
 export type FaqItem = { q: string; a: string };
+
+// Read from the trip data, so a price change cannot leave this answer behind.
+const perPersonNote = trips
+  .filter((t) => t.perPerson)
+  .map((t) => ` Prices are for the whole group, except the ${t.title}: ${priceTerms(t)}`)
+  .join("");
 
 export const faqs: FaqItem[] = [
   {
@@ -15,7 +23,7 @@ export const faqs: FaqItem[] = [
   },
   {
     q: "How many anglers can come on a trip?",
-    a: "Each charter is private and accommodates up to 6 anglers. Kids and beginners are always welcome.",
+    a: `Each charter is private and accommodates up to ${MAX_GUESTS} anglers. Kids and beginners are always welcome.${perPersonNote}`,
   },
   {
     q: "What is included in the charter price?",
@@ -28,6 +36,10 @@ export const faqs: FaqItem[] = [
   {
     q: "What is the best time of year to fish in Charleston, SC?",
     a: "Charleston offers year-round fishing. Spring and fall are peak for redfish and speckled trout, summer brings the most variety including tarpon and sharks, and winter is excellent for big redfish schools and sheepshead.",
+  },
+  {
+    q: "Do you run charters on Sundays?",
+    a: "No. Captain Joseph keeps Sunday as the Sabbath, so charters run Monday through Saturday, with morning and afternoon trips.",
   },
   {
     q: "How do I book a Charleston fishing trip with Palmetto Tide Charters?",

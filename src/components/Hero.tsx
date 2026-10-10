@@ -49,7 +49,8 @@ export default function Hero({
         </h1>
 
         <p className="font-body text-white/85 text-base sm:text-lg md:text-xl mt-3 mb-8 animate-fade-in-up [animation-delay:0.2s] leading-relaxed max-w-md">
-          Private inshore fishing charters with Captain Joseph Christy. Redfish, trout, flounder and sharks. Inshore, every tide.
+          Private fishing charters and harbor cruises with Captain Joseph Christy. Redfish, trout, flounder and sharks, or a sunset on
+          Charleston Harbor.
         </p>
 
         <div className="flex flex-col min-[420px]:flex-row gap-3 animate-fade-in-up [animation-delay:0.3s]">

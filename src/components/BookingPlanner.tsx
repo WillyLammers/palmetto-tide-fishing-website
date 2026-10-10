@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useId, useMemo, useState } from "react";
-import { MAX_GUESTS, tripById, tripTotal, trips } from "@/data/trips";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { MAX_GUESTS, kindLabels, tripById, tripTotal, tripsOfKind, type TripKind } from "@/data/trips";
 import { mailHref, smsHref } from "@/data/site";
 import { SELECT_TRIP_EVENT } from "./BookTripButton";
+import { SELECT_OCCASION_EVENT } from "./OccasionChips";
 import { MailIcon, TextIcon } from "./icons";
 import { btn } from "./ui";
 
@@ -40,6 +41,9 @@ export default function BookingPlanner() {
   const [name, setName] = useState("");
   const [notes, setNotes] = useState("");
   const [minDate, setMinDate] = useState<string | undefined>(undefined);
+  // The line an occasion chip last added to the notes, so tapping a second one
+  // swaps it rather than stacking both. Anything typed by hand is kept.
+  const occasionNote = useRef("");
 
   useEffect(() => {
     // "Today" is the visitor's, not the server's.
@@ -49,8 +53,21 @@ export default function BookingPlanner() {
       const id = (e as CustomEvent<string>).detail;
       if (tripById(id)) setTripId(id);
     };
+    const onOccasion = (e: Event) => {
+      const note = (e as CustomEvent<string>).detail;
+      setNotes((prev) => {
+        const typed =
+          occasionNote.current && prev.startsWith(occasionNote.current) ? prev.slice(occasionNote.current.length).trimStart() : prev;
+        occasionNote.current = note;
+        return typed ? `${note} ${typed}` : note;
+      });
+    };
     window.addEventListener(SELECT_TRIP_EVENT, onSelect);
-    return () => window.removeEventListener(SELECT_TRIP_EVENT, onSelect);
+    window.addEventListener(SELECT_OCCASION_EVENT, onOccasion);
+    return () => {
+      window.removeEventListener(SELECT_TRIP_EVENT, onSelect);
+      window.removeEventListener(SELECT_OCCASION_EVENT, onOccasion);
+    };
   }, []);
 
   const trip = tripById(tripId);
@@ -58,9 +75,12 @@ export default function BookingPlanner() {
 
   const message = useMemo(() => {
     const lines = ["Hi Captain Joseph, I'd like to book a trip with Palmetto Tide Charters.", ""];
+    // A fishing trip's label is its length; a cruise's is a place or a time of
+    // day, which reads oddly in brackets, so only fishing trips carry it.
     const total = trip ? tripTotal(trip, guests) : null;
+    const details = trip ? [trip.kind === "fishing" ? trip.duration.toLowerCase() : null, total == null ? null : `$${total}`].filter(Boolean) : [];
     lines.push(
-      `Trip: ${trip ? `${trip.title} (${trip.duration.toLowerCase()}${total == null ? "" : `, $${total}`})` : "Not sure yet, would love a recommendation"}`,
+      `Trip: ${trip ? `${trip.title}${details.length ? ` (${details.join(", ")})` : ""}` : "Not sure yet, would love a recommendation"}`,
     );
     if (date) lines.push(`Date: ${prettyDate(date)}${flexible ? " (flexible)" : ""}`);
     else if (flexible) lines.push("Date: Flexible");
@@ -85,34 +105,44 @@ export default function BookingPlanner() {
 
       <fieldset className="mb-6">
         <legend className={label}>Trip</legend>
+        {(["fishing", "cruise"] as TripKind[]).map((kind) => {
+          const group = tripsOfKind(kind);
+          return (
+            <div key={kind} className="mb-3">
+              <p className="font-body text-xs text-slate-light mb-1.5">{kindLabels[kind]}</p>
+              <div className="grid grid-cols-2 gap-2.5">
+                {group.map((t, i) => {
+                  const selected = tripId === t.id;
+                  const total = tripTotal(t, guests);
+                  // An odd last tile takes the whole row rather than sitting beside a gap.
+                  const lone = i === group.length - 1 && group.length % 2 === 1;
+                  return (
+                    <label
+                      key={t.id}
+                      className={`relative cursor-pointer rounded-xl ${lone ? "col-span-2" : ""} border px-3.5 py-3 transition-all has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-gold ${
+                        selected ? "border-navy bg-navy text-white shadow-md" : "border-navy/15 hover:border-navy/40 text-navy"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name={`${uid}-trip`}
+                        value={t.id}
+                        checked={selected}
+                        onChange={() => setTripId(t.id)}
+                        className="sr-only"
+                      />
+                      <span className="block font-heading text-[14px] sm:text-[15px] uppercase tracking-wide leading-tight">{t.title}</span>
+                      <span className={`block font-body text-xs mt-1 ${selected ? "text-white/70" : "text-slate-light"}`}>
+                        {total == null ? "Price on request" : `${t.duration} · $${total}`}
+                      </span>
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
         <div className="grid grid-cols-2 gap-2.5">
-          {trips.map((t, i) => {
-            const selected = tripId === t.id;
-            const total = tripTotal(t, guests);
-            // An odd last tile takes the whole row rather than sitting beside a gap.
-            const lone = i === trips.length - 1 && trips.length % 2 === 1;
-            return (
-              <label
-                key={t.id}
-                className={`relative cursor-pointer rounded-xl ${lone ? "col-span-2" : ""} border px-3.5 py-3 transition-all has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-gold ${
-                  selected ? "border-navy bg-navy text-white shadow-md" : "border-navy/15 hover:border-navy/40 text-navy"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name={`${uid}-trip`}
-                  value={t.id}
-                  checked={selected}
-                  onChange={() => setTripId(t.id)}
-                  className="sr-only"
-                />
-                <span className="block font-heading text-[14px] sm:text-[15px] uppercase tracking-wide leading-tight">{t.title}</span>
-                <span className={`block font-body text-xs mt-1 ${selected ? "text-white/70" : "text-slate-light"}`}>
-                  {t.duration} · {total == null ? "Ask for pricing" : `$${total}`}
-                </span>
-              </label>
-            );
-          })}
           <label
             className={`col-span-2 cursor-pointer rounded-xl border px-3.5 py-2.5 text-center transition-all has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-gold ${
               tripId === "" ? "border-navy bg-navy/[0.04] text-navy" : "border-navy/15 hover:border-navy/40 text-slate"

@@ -70,7 +70,7 @@ export default function MobileCallBar() {
           Call
         </a>
         <a
-          href={smsHref("Hi Captain Joseph, I'd like to book a fishing trip.")}
+          href={smsHref("Hi Captain Joseph, I'd like to book a trip.")}
           aria-label={`Text Palmetto Tide Charters at ${PHONE_DISPLAY}`}
           className={btn({ variant: "outlineLight", className: "flex-1 px-2" })}
         >

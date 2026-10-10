@@ -45,7 +45,7 @@ export default function StructuredData() {
     name: BUSINESS_NAME,
     alternateName: "Palmetto Tide Fishing Charters",
     description:
-      "Inshore fishing charters, shark fishing and shark tooth hunting trips in Charleston, South Carolina with Captain Joseph Christy, a Charleston native targeting redfish, speckled trout and flounder on the Lowcountry flats.",
+      "Private inshore fishing charters, shark fishing and shark tooth hunting trips, plus harbor and sunset cruises, sandbar days, dolphin tours and history cruises, in Charleston, South Carolina with Captain Joseph Christy, a Charleston native.",
     url: SITE_URL,
     telephone: PHONE,
     email: EMAIL,
@@ -116,11 +116,15 @@ export default function StructuredData() {
       "Shark fishing",
       "Charleston Harbor",
       "Charleston Harbor cruises",
+      "Sunset cruises",
+      "Dolphin tours",
+      "Charleston history",
+      "Fort Sumter",
       "Lowcountry tides",
     ],
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Fishing Charter Trips",
+      name: "Fishing Charters, Cruises & Outings",
       itemListElement: trips.map((t) => ({
         "@type": "Offer",
         "@id": `${SITE_URL}/#${t.id}`,
@@ -131,7 +135,7 @@ export default function StructuredData() {
         url: `${SITE_URL}/#trips`,
         itemOffered: {
           "@type": "Service",
-          serviceType: t.serviceType ?? "Fishing Charter",
+          serviceType: t.kind === "cruise" ? "Boat Tour" : "Fishing Charter",
           name: t.schemaName,
           description: describe(t),
           image: `${SITE_URL}${t.photo}`,
@@ -214,7 +218,7 @@ export default function StructuredData() {
     "@type": "WebPage",
     "@id": `${SITE_URL}/#webpage`,
     url: SITE_URL,
-    name: "Palmetto Tide Charters | Charleston, SC Inshore Fishing Charters",
+    name: "Palmetto Tide Charters | Charleston Fishing Charters & Harbor Cruises",
     isPartOf: { "@id": `${SITE_URL}/#website` },
     about: { "@id": `${SITE_URL}/#business` },
     primaryImageOfPage: { "@id": `${SITE_URL}/#heroimage` },
